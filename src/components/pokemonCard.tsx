@@ -15,7 +15,7 @@ function PokemonCard({pokemon}: {pokemon: Pokemon}){
                 <p className="text-3xl font-semibold tracking-wide">{pokemon.name}</p>
                 <p className="font-bold text-xl secondary-glow-text">{pokemon.price}$</p>
             </div>
-            <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary"></NeoButton>
+            <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary" sizeText="text-2xl"></NeoButton>
         </div>
     )
 }

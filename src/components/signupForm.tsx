@@ -20,13 +20,13 @@ function SignupForm() {
 
   async function postData() {
     console.log(formData);
-    
+
     const response = await fetch("http://127.0.0.1:8000/users", {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formData),
     });
     console.log(response);
   }
@@ -34,7 +34,7 @@ function SignupForm() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-5">
           <div className="shadow-outerNeo rounded-md">
             <input
               type="text"
@@ -70,9 +70,14 @@ function SignupForm() {
               className="p-3 placeholder-white w-full text-sm opacity-30 bg-inherit text-white"
             />
           </div>
-
-          <NeoButton handleClick={postData} text="Marché conclu !" colorText="secondary"></NeoButton>
         </div>
+        <NeoButton
+          handleClick={postData}
+          text="Marché conclu !"
+          colorText="secondary"
+          sizeText="text-sm"
+          moreStyle="p-8 py-2.5"
+        ></NeoButton>
       </form>
     </div>
   );
