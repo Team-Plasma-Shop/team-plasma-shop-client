@@ -23,10 +23,10 @@ module.exports = {
           DEFAULT: '#1d1e20' 
         }
       },
-      boxShadow: {
+      boxShadow: ({theme}) => ({
         'innerNeo' : 'inset -5px -5px 10px 0px rgba(102,102,102,0.25), inset 5px 5px 10px 0px rgba(0,0,0,0.25)',
         'outerNeo' : '-5px -5px 15px 0px rgba(102,102,102,0.25), 5px 5px 15px 0px rgba(0,0,0,0.25)'
-      },
+      }),
     }
   },
   plugins: [],
