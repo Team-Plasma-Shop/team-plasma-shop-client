@@ -14,18 +14,15 @@ const SignupForm: React.FC = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col ">
-          <label>Nom d'utilisateur</label>
+        <div className="flex flex-col gap-8">
           <input
             type="text"
             {...register("username")}
             placeholder="Nom d'utilisateur"
           />
 
-          <label>Email</label>
           <input type="email" {...register("email")} placeholder="Email" />
 
-          <label>Password</label>
           <input
             type="password"
             {...register("password")}
