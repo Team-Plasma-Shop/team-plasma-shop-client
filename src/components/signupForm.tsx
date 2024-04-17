@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface InputData {
@@ -9,7 +10,30 @@ interface InputData {
 
 function SignupForm() {
   const { register, handleSubmit } = useForm<InputData>();
-  const onSubmit: SubmitHandler<InputData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<InputData> = (data) => postData(data);
+
+  const body = {
+    "uuid": "a9fec0f1-e8ad-4cce-9e2a-ef66fe42d1a2",
+    "username": "string",
+    "email": "string",
+    "password": "string",
+    "role": [
+      "string"
+    ],
+    "created_at": "2024-04-17T11:26:28.969Z",
+    "verified": true
+  }
+
+  async function postData(data: InputData) {
+    const response = await fetch("http://127.0.0.1:8000/users", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    console.log(response);
+  }
 
   return (
     <div>
@@ -21,7 +45,10 @@ function SignupForm() {
             placeholder="Nom d'utilisateur"
           />
 
-          <input type="email" {...register("email")} placeholder="Email" />
+          <input type="email"
+            {...register("email")}
+            placeholder="Email"
+          />
 
           <input
             type="password"
