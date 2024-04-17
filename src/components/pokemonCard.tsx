@@ -17,15 +17,18 @@ function PokemonCard({pokemon, isBuyable = true, isDeletable = false, isReleasab
                 <p className="font-bold text-lg secondary-glow-text">{pokemon.price}$</p>
             </div>
 
+            <div className="flex justify-between gap-4">
             {
-                isBuyable ? ( <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary" sizeText="text-base"></NeoButton>) : null
+                isBuyable ? ( <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary" sizeText="text-base" moreStyle="flex-1 "></NeoButton>) : null
             }
             {
-                isEditable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="secondary" sizeText="text-base"></NeoButton>) : null
+                isEditable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="secondary" sizeText="text-base" moreStyle="flex-1 "></NeoButton>) : null
             }
             {
-                isReleasable ? ( <NeoButton handleClick={helloWorld} text="Relâcher" colorText="danger" sizeText="text-base"></NeoButton>) : null
+                isReleasable ? ( <NeoButton handleClick={helloWorld} text="Relâcher" colorText="danger" sizeText="text-base" moreStyle="flex-1 "></NeoButton>) : null
             }
+            </div>
+            
             
            
         </div>
