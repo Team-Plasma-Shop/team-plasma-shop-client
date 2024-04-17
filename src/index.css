@@ -45,6 +45,18 @@ input {
     .danger-gradient{
         @apply bg-gradient-to-b from-danger to-danger-light;
     }
+
+    .primary-glow-text{
+        @apply primary-gradient text-transparent bg-clip-text primary-glow;
+    }
+
+    .secondary-glow-text{
+        @apply secondary-gradient text-transparent bg-clip-text secondary-glow;
+    }
+
+    .danger-glow-text{
+        @apply danger-gradient text-transparent bg-clip-text danger-glow;
+    }
 }
 
 .primary-glow{

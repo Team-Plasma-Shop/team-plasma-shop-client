@@ -6,7 +6,7 @@ function Header(){
         <header className='flex w-full justify-between py-6'>
             <div className='text-3xl font-bold flex gap-2'>
                 <span>Team</span>
-                <span className='primary-gradient text-transparent bg-clip-text primary-glow'>Plasma</span>
+                <span className='primary-glow-text'>Plasma</span>
                 <span>Shop</span>
             </div>
             <nav>
