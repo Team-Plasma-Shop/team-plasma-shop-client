@@ -1,16 +1,20 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import HomePage from './pages/homePage';
+import LoginPage from './pages/loginPage';
 import AboutPage from './pages/aboutPage';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </Router>
+    <div className='background-color'>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
