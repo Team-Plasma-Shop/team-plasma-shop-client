@@ -4,10 +4,12 @@ import { Link, NavLink } from 'react-router-dom';
 function Header(){
     return(
         <header className='flex w-full justify-between py-6'>
-            <div className='text-3xl font-bold flex gap-2'>
-                <span>Team</span>
-                <span className='primary-glow-text'>Plasma</span>
-                <span>Shop</span>
+            <div>
+                <Link to="/" className='text-3xl font-bold flex gap-2'>
+                    <span>Team</span>
+                    <span className='primary-glow-text'>Plasma</span>
+                    <span>Shop</span>
+                </Link>
             </div>
             <nav>
                 <ul className='flex text-xl gap-4'>
