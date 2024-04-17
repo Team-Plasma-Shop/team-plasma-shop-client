@@ -43,11 +43,11 @@ function HomePage() {
 
   return (
     
-      <section className="mt-36">
-            <h1 className="text-6xl font-semibold">En stock</h1>
-            <p className="text-xl w-2/4 mt-5 opacity-60">Volés avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma !</p>
+      <section className="mt-20">
+            <h1 className="text-4xl font-semibold">En stock</h1>
+            <p className="text-base w-2/4 mt-5 opacity-60">Volés avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma !</p>
 
-            <div className="flex justify-between flex-wrap">
+            <div className="grid grid-cols-4 mt-8">
             {
               pokemons.map((pokemon) => {
                 return <PokemonCard key={pokemon.uuid} pokemon={pokemon}></PokemonCard>

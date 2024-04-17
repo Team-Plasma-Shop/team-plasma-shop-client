@@ -12,7 +12,7 @@ function Header(){
                 </Link>
             </div>
             <nav>
-                <ul className='flex text-xl gap-4'>
+                <ul className='flex text-base gap-4'>
                     <li><Link to="/">Shop</Link> </li>
                     <li><Link to="/account">Compte</Link></li>
                     <li><Link to="/login">Connexion</Link> </li>

@@ -9,22 +9,22 @@ function PokemonCard({pokemon, isBuyable = true, isDeletable = false, isReleasab
 
 
     return(
-        <div className="shadow-outerNeo w-[370px] h-fit rounded-2xl p-8 flex flex-col gap-2">
+        <div className="shadow-outerNeo w-72 h-fit rounded-2xl p-8 flex flex-col gap-2">
             <img src={pokemon.imageLink} alt={`${pokemon.name}`} />
             <hr className="opacity-50 h-4"></hr>
             <div className="flex justify-between items-center">
-                <p className="text-3xl font-semibold tracking-wide">{pokemon.name}</p>
-                <p className="font-bold text-xl secondary-glow-text">{pokemon.price}$</p>
+                <p className="text-xl font-semibold tracking-wide">{pokemon.name}</p>
+                <p className="font-bold text-lg secondary-glow-text">{pokemon.price}$</p>
             </div>
 
             {
-                isBuyable ? ( <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary"></NeoButton>) : null
+                isBuyable ? ( <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary" sizeText="text-base"></NeoButton>) : null
             }
             {
-                isEditable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="secondary"></NeoButton>) : null
+                isEditable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="secondary" sizeText="text-base"></NeoButton>) : null
             }
             {
-                isReleasable ? ( <NeoButton handleClick={helloWorld} text="Relâcher" colorText="danger"></NeoButton>) : null
+                isReleasable ? ( <NeoButton handleClick={helloWorld} text="Relâcher" colorText="danger" sizeText="text-base"></NeoButton>) : null
             }
             
            
