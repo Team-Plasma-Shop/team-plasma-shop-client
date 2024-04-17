@@ -1,13 +1,13 @@
 import { PlasmaLogo } from "../assets/PlasmaLogo";
 
-import LoginForm from "../components/loginForm";
+import TOTPForm from "../components/totpForm";
 
-function LoginPage() {
+function TOTPPage() {
   return (
     <div className="flex flex-row justify-between">
       <div className="mt-28 mx-auto">
-        <h1 className="text-4xl pr-24 mb-10">Connexion</h1>
-        <LoginForm />
+        <h1 className="text-4xl mb-10">Entrer votre code</h1>
+        <TOTPForm />
       </div>
 
       <PlasmaLogo />
@@ -15,4 +15,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage
+export default TOTPPage
