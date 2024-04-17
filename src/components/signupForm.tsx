@@ -2,11 +2,12 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface InputData {
+  username: string;
   email: string;
   password: string;
 }
 
-const LoginForm: React.FC = () => {
+const SignupForm: React.FC = () => {
   const { register, handleSubmit } = useForm<InputData>();
   const onSubmit: SubmitHandler<InputData> = (data) => console.log(data);
 
@@ -14,15 +15,25 @@ const LoginForm: React.FC = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-8">
+          <input
+            type="text"
+            {...register("username")}
+            placeholder="Nom d'utilisateur"
+          />
+
           <input type="email" {...register("email")} placeholder="Email" />
-          
-          <input type="password" {...register("password")} placeholder="Mot de passe" />
-          
-          <button type="submit">Connexion</button>
+
+          <input
+            type="password"
+            {...register("password")}
+            placeholder="Mot de passe"
+          />
+
+          <button type="submit">Marché conclu !</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default LoginForm;
+export default SignupForm;

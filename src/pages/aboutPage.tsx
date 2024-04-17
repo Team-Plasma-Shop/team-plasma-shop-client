@@ -1,7 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import { Component } from 'react';
 
-const AboutPage: FunctionComponent = () => {
-  return <h1>À propos de nous</h1>;
+export default class AboutPage extends Component {
+  public render() {
+    return (
+      <div>
+        <h1>About Page</h1>
+      </div>
+    );
+  }
 };
-
-export default AboutPage;

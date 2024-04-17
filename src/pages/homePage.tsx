@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
-class HomePage extends Component {
+export default class HomePage extends Component {
   public render() {
     return (
       <div>
@@ -9,5 +9,3 @@ class HomePage extends Component {
     );
   }
 }
-
-export default HomePage;

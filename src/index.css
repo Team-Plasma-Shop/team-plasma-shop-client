@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 
+body {
+    max-width: 1440px;
+    color: white
+}
+
+@layer base {
+    html {
+     @apply bg-gradient-to-b from-background to-background-light;
+    }
+}
+
 @layer components{
     .background-gradient{
         @apply bg-gradient-to-b from-background to-background-light;
