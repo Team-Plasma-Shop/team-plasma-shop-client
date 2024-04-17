@@ -16,14 +16,22 @@ const SignupForm: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col ">
           <label>Nom d'utilisateur</label>
-          <input type="text" {...register("username")} placeholder="Nom d'utilisateur" />
+          <input
+            type="text"
+            {...register("username")}
+            placeholder="Nom d'utilisateur"
+          />
 
           <label>Email</label>
           <input type="email" {...register("email")} placeholder="Email" />
-          
+
           <label>Password</label>
-          <input type="password" {...register("password")} placeholder="Mot de passe" />
-          
+          <input
+            type="password"
+            {...register("password")}
+            placeholder="Mot de passe"
+          />
+
           <button type="submit">Marché conclu !</button>
         </div>
       </form>

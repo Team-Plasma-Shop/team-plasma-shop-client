@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import { Component } from "react";
 
-import { PlasmaLogo } from '../assets/PlasmaLogo';
+import { PlasmaLogo } from "../assets/PlasmaLogo";
 
-import SignupForm from '../components/signupForm';
+import SignupForm from "../components/signupForm";
 
 export default class SignupPage extends Component {
   public render() {

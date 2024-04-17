@@ -7,7 +7,7 @@ import SignupPage from './pages/signupPage';
 
 function App() {
   return (
-    <div className='background-color'>
+    <div>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
