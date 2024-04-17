@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Pokemon } from "../models/pokemon";
 import PokemonCard from "../components/pokemonCard";
+import GeneralInfos from "../components/account/generalInfos";
+import OwnedPokemon from "../components/account/ownedPokemons";
+import ManageUserTable from "../components/account/manageUserTable";
+import { User } from "../models/user";
 
 function AccountPage() {
   const [username, setUsername] = useState("N le sdf");
@@ -40,39 +44,66 @@ function AccountPage() {
       createdAt: new Date(),
       modifiedAt: new Date(),
     },
-    // Ajoutez d'autres Pokémon selon vos besoins
   ];
+
+  const users: User[] = [
+    {
+      uuid: '1',
+      username: 'john_doe',
+      email: 'john.doe@example.com',
+      password: 'password123',
+      isVerified: true,
+      role: ['user'],
+      createdAt: new Date(),
+    },
+    {
+      uuid: '2',
+      username: 'jane_doe',
+      email: 'jane.doe@example.com',
+      password: 'password456',
+      isVerified: true,
+      role: ['user'],
+      createdAt: new Date(),
+    },
+    {
+      uuid: '3',
+      username: 'admin_user',
+      email: 'admin.user@example.com',
+      password: 'adminPassword',
+      isVerified: true,
+      role: ['admin'],
+      createdAt: new Date(),
+    },
+    {
+      uuid: '4',
+      username: 'guest_user',
+      email: 'guest.user@example.com',
+      password: 'guestPassword',
+      isVerified: false,
+      role: ['guest'],
+      createdAt: new Date(),
+    },
+    {
+      uuid: '5',
+      username: 'test_user',
+      email: 'test.user@example.com',
+      password: 'testPassword',
+      isVerified: true,
+      role: ['user', 'tester'],
+      createdAt: new Date(),
+    },
+  ];
+  
 
   return (
     <section className="mt-20">
       <h1 className="text-4xl font-semibold">Compte</h1>
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold">Informations générales</h2>
-        <div className="flex gap-8 mt-8">
-          <div>
-            <span className=" opacity-60">Nom</span>
-            <div className="shadow-innerNeo w-80 p-4 rounded-lg mt-2">
-              <span className="text-base">{username}</span>
-            </div>
-          </div>
-          <div>
-            <span className=" opacity-60">Email</span>
-            <div className="shadow-innerNeo w-80 p-4 rounded-lg mt-2">
-              <span className="text-base">{email}</span>
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col gap-8 mt-8">
+        <GeneralInfos username={username} email={email} />
+        <OwnedPokemon pokemons={pokemons}/>
+        <ManageUserTable users={users}/>
       </div>
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold">Mes Pokémons</h2>
-        <div className="grid grid-cols-4 mt-8">
-            {
-              pokemons.map((pokemon) => {
-                return <PokemonCard key={pokemon.uuid} pokemon={pokemon} isBuyable={false} isReleasable={true}></PokemonCard>
-              } )
-            }
-            </div>
-    </div>
+      
     </section>
   );
 }
