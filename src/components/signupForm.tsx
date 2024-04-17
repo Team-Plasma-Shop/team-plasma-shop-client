@@ -24,7 +24,7 @@ const SignupForm: React.FC = () => {
           <label>Password</label>
           <input type="password" {...register("password")} placeholder="Mot de passe" />
           
-          <button type="submit">Connexion</button>
+          <button type="submit">Marché conclu !</button>
         </div>
       </form>
     </div>
