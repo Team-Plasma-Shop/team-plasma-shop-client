@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components{
+    .background-gradient{
+        @apply bg-gradient-to-b from-background to-background-light;
+    }
+    
+    .primary-gradient{
+        @apply bg-gradient-to-b from-primary to-primary-light;
+    }
+    
+    .secondary-gradient{
+        @apply bg-gradient-to-b from-secondary to-secondary-light;
+    }
+    
+    .danger-gradient{
+        @apply bg-gradient-to-b from-danger to-danger-light;
+    }
+}
