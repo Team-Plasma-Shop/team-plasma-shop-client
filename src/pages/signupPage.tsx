@@ -6,7 +6,7 @@ export default class SignupPage extends Component {
   public render() {
     return (
       <div>
-        <h1>Connexion</h1>
+        <h1>Faison affaire !</h1>
         <SignupForm />
       </div>
     );
