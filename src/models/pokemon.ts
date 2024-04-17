@@ -7,7 +7,7 @@ interface Pokemon {
 
 
 
-  
+
   name: string;
   imageLink       : string;
   price: number;
@@ -15,5 +15,11 @@ interface Pokemon {
   owner: string     ;
   isSold    : boolean
   createdAt: Date;
+
+
+
+
+
+  
   modifiedAt: Date
 }
