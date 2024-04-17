@@ -8,6 +8,10 @@ body {
     color: white
 }
 
+input {
+    color: black
+}
+
 @layer base {
     html {
      @apply bg-gradient-to-b from-background to-background-light;
