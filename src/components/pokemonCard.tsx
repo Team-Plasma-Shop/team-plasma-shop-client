@@ -2,10 +2,11 @@ import { log } from "console";
 import { Pokemon } from "../models/pokemon";
 import NeoButton from "./button";
 
-function PokemonCard({pokemon}: {pokemon: Pokemon}){
+function PokemonCard({pokemon, isBuyable = true, isDeletable = false, isReleasable = false, isEditable = false}: {pokemon: Pokemon, isBuyable?: boolean, isDeletable?: boolean, isReleasable?: boolean, isEditable?: boolean}){
     function helloWorld() {
         console.log("hello world");
     }
+
 
     return(
         <div className="shadow-outerNeo w-[370px] h-fit rounded-2xl p-8 flex flex-col gap-2">
@@ -15,7 +16,18 @@ function PokemonCard({pokemon}: {pokemon: Pokemon}){
                 <p className="text-3xl font-semibold tracking-wide">{pokemon.name}</p>
                 <p className="font-bold text-xl secondary-glow-text">{pokemon.price}$</p>
             </div>
-            <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary"></NeoButton>
+
+            {
+                isBuyable ? ( <NeoButton handleClick={helloWorld} text="Acheter" colorText="primary"></NeoButton>) : null
+            }
+            {
+                isEditable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="secondary"></NeoButton>) : null
+            }
+            {
+                isReleasable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="danger"></NeoButton>) : null
+            }
+            
+           
         </div>
     )
 }
