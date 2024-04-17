@@ -7,7 +7,7 @@ interface InputData {
   password: string;
 }
 
-const SignupForm: React.FC = () => {
+function SignupForm() {
   const { register, handleSubmit } = useForm<InputData>();
   const onSubmit: SubmitHandler<InputData> = (data) => console.log(data);
 
