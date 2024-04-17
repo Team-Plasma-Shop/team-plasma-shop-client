@@ -13,11 +13,9 @@ const LoginForm: React.FC = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col ">
-          <label>Email</label>
+        <div className="flex flex-col gap-8">
           <input type="email" {...register("email")} placeholder="Email" />
           
-          <label>Password</label>
           <input type="password" {...register("password")} placeholder="Mot de passe" />
           
           <button type="submit">Connexion</button>
