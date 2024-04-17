@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
     max-width: 1440px;
     color: white
@@ -12,6 +13,7 @@ body {
      @apply bg-gradient-to-b from-background to-background-light;
     }
 }
+
 @layer components{
     .background-gradient{
         @apply bg-gradient-to-b from-background to-background-light;
