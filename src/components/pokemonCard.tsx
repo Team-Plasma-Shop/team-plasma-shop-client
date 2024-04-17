@@ -24,7 +24,7 @@ function PokemonCard({pokemon, isBuyable = true, isDeletable = false, isReleasab
                 isEditable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="secondary"></NeoButton>) : null
             }
             {
-                isReleasable ? ( <NeoButton handleClick={helloWorld} text="Modifier" colorText="danger"></NeoButton>) : null
+                isReleasable ? ( <NeoButton handleClick={helloWorld} text="Relâcher" colorText="danger"></NeoButton>) : null
             }
             
            

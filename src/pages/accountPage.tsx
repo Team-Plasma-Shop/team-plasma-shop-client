@@ -1,8 +1,47 @@
 import { useState } from "react";
+import { Pokemon } from "../models/pokemon";
+import PokemonCard from "../components/pokemonCard";
 
 function AccountPage() {
   const [username, setUsername] = useState("N le sdf");
   const [email, setEmail] = useState("jesuissdf@gmail.com");
+
+  const pokemons: Pokemon[] = [
+    {
+      uuid: '1',
+      name: 'Bulbasaur',
+      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
+      price: 100,
+      type: 'Grass',
+      owner: 'Ash Ketchum',
+      isSold: false,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    {
+      uuid: '2',
+      name: 'Charmander',
+      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
+      price: 150,
+      type: 'Fire',
+      owner: 'Gary Oak',
+      isSold: false,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    {
+      uuid: '3',
+      name: 'Squirtle',
+      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
+      price: 120,
+      type: 'Water',
+      owner: 'Misty',
+      isSold: true,
+      createdAt: new Date(),
+      modifiedAt: new Date(),
+    },
+    // Ajoutez d'autres Pokémon selon vos besoins
+  ];
 
   return (
     <section className="mt-36">
@@ -24,6 +63,16 @@ function AccountPage() {
           </div>
         </div>
       </div>
+      <div className="mt-8">
+        <h2 className="text-4xl font-semibold">Mes Pokémons</h2>
+        <div className="flex justify-between flex-wrap mt-4">
+            {
+              pokemons.map((pokemon) => {
+                return <PokemonCard key={pokemon.uuid} pokemon={pokemon} isBuyable={false} isReleasable={true}></PokemonCard>
+              } )
+            }
+            </div>
+    </div>
     </section>
   );
 }
