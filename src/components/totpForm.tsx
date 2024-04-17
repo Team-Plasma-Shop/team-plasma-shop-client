@@ -15,7 +15,7 @@ function TOTPForm() {
         <div className="flex flex-col gap-5">
           <div className="shadow-outerNeo rounded-md">
             <input
-              type="number"
+              type="text"
               {...register("code")}
               placeholder="Code"
               className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-primary"
