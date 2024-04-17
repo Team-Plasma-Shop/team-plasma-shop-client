@@ -20,7 +20,7 @@ function LoginForm() {
               type="email"
               {...register("email")}
               placeholder="Email"
-              className="p-3 placeholder-white w-full text-sm opacity-30 bg-inherit text-white"
+              className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-primary"
             />
           </div>
 
@@ -29,7 +29,7 @@ function LoginForm() {
               type="password"
               {...register("password")}
               placeholder="Mot de passe"
-              className="p-3 placeholder-white w-full text-sm opacity-30 bg-inherit text-white"
+              className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-primary"
             />
           </div>
         </div>

@@ -43,7 +43,7 @@ function SignupForm() {
                   setFormData({ ...formData, username: e.target.value }),
               })}
               placeholder="Nom d'utilisateur"
-              className="rounded-md text-sm opacity-30 p-3 placeholder-white w-full bg-inherit text-white"
+              className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary"
             />
           </div>
 
@@ -55,7 +55,7 @@ function SignupForm() {
                   setFormData({ ...formData, email: e.target.value }),
               })}
               placeholder="Email"
-              className="rounded-md text-sm opacity-30 p-3 placeholder-white w-full bg-inherit text-white"
+              className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary"
             />
           </div>
 
@@ -67,7 +67,7 @@ function SignupForm() {
                   setFormData({ ...formData, password: e.target.value }),
               })}
               placeholder="Mot de passe"
-              className="p-3 placeholder-white w-full text-sm opacity-30 bg-inherit text-white"
+              className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary"
             />
           </div>
         </div>
