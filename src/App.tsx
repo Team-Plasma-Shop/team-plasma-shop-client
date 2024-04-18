@@ -7,6 +7,7 @@ import SignupPage from './pages/signupPage';
 import Header from './components/header';
 import AccountPage from './pages/accountPage';
 import TOTPPage from './pages/totpPage';
+import PrivateRoutes from './utils/PrivateRoute';
 
 function App() {
   return (
@@ -14,12 +15,16 @@ function App() {
       <Router>
       <Header></Header>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route element={<PrivateRoutes/>}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/account" element={<AccountPage/>} />
+          </Route>
+          
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/totp" element={<TOTPPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/account" element={<AccountPage/>} />
+        
         </Routes>
       </Router>
     </div>
