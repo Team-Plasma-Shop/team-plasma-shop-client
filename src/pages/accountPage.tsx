@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { Pokemon } from "../models/pokemon";
-import PokemonCard from "../components/pokemonCard";
 import GeneralInfos from "../components/account/generalInfos";
 import OwnedPokemon from "../components/account/ownedPokemons";
 import ManageUserTable from "../components/account/manageUserTable";
 import { User } from '../models/user';
-import { jwtDecode } from "jwt-decode";
-import { getTokenFromLs } from "../utils/getTokenFromLs";
-import fetchUserById from "../services/fetchUserById";
-import { Token } from "../models/token";
+import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
 
 function AccountPage() {
   const [username, setUsername] = useState("");
@@ -85,39 +81,31 @@ function AccountPage() {
     },
   ];
 
-  async function setUserInfo(){
-    const token = getTokenFromLs()
-    let decodedToken: Token;
-
-    if (token !== null) {
-      decodedToken = jwtDecode(token)
-
-      if (decodedToken) {
-        const currentUser:User = await fetchUserById(decodedToken.id)
-        
-        setUsername(currentUser.username)
-        setEmail(currentUser.email)
-          
-      }
+  async function setUserInfo() {
+    const currentUserInfo = await getCurrentUserInfo()
+    if (currentUserInfo) {
+      setUsername(currentUserInfo.username)
+      setEmail(currentUserInfo.email)
     }
   }
 
-  useEffect(()=>{
-    setUserInfo()
-  },[])
-  
 
-  return (
-    <section className="mt-20">
-      <h1 className="text-4xl font-semibold">Compte</h1>
-      <div className="flex flex-col gap-8 mt-8">
-        <GeneralInfos username={username} email={email} />
-        <OwnedPokemon pokemons={pokemons}/>
-        <ManageUserTable users={users}/>
-      </div>
-      
-    </section>
-  );
+useEffect(() => {
+  setUserInfo()
+}, [])
+
+
+return (
+  <section className="mt-20">
+    <h1 className="text-4xl font-semibold">Compte</h1>
+    <div className="flex flex-col gap-8 mt-8">
+      <GeneralInfos username={username} email={email} />
+      <OwnedPokemon pokemons={pokemons} />
+      <ManageUserTable users={users} />
+    </div>
+
+  </section>
+);
 }
 
 export default AccountPage;
