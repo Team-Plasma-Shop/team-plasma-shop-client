@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
+import { StatusCodes } from "http-status-codes";
+import { useNavigate } from "react-router-dom";
 
 interface InputData {
   username: string;
@@ -10,6 +12,7 @@ interface InputData {
 
 function SignupForm() {
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<InputData>();
   const [formData, setFormData] = useState<InputData>({
     username: "",
@@ -17,10 +20,10 @@ function SignupForm() {
     password: ""
   });
 
-  async function postData() {
-   
-    const data = {
-      ...formData,
+  const onSubmit: SubmitHandler<InputData> = async (data) => {
+
+    const newdata = {
+      ...data,
       verified: false,
       createdAt: new Date()
     }
@@ -35,7 +38,6 @@ function SignupForm() {
       setError("Le nom d'utilisateur doit contenir uniquement des lettres et des chiffres sans espaces ni caractères spéciaux");
       return;
     }
-
     
     const response = await fetch(`${process.env.REACT_APP_API_ROUTE}users`, {
       method: "POST",
@@ -43,13 +45,22 @@ function SignupForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(newdata),
     });
-  }
+
+    if (!response.ok) {
+      setError("Erreur, veuillez ressayer plus tard");
+      return;
+    }
+
+    if (response.ok) {
+      navigate("/email-verification")
+    }
+  };
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5">
           <div className="shadow-outerNeo rounded-md">
             <input
@@ -97,7 +108,7 @@ function SignupForm() {
         </div>
 
         <NeoButton
-          handleClick={postData}
+          handleClick={handleSubmit(onSubmit)}
           text="Marché conclu !"
           colorText="secondary"
           sizeText="text-sm"
