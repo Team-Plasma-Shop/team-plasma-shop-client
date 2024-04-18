@@ -131,6 +131,7 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
 
             </div>
         </>
+
     )
 }
 
