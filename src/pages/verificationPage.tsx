@@ -1,6 +1,26 @@
+import { useEffect } from "react";
 import { PlasmaLogo } from "../assets/PlasmaLogo";
 
-function verificationPage() {
+function VerificationPage() {
+  const token = localStorage.getItem("email-token");
+  const tokenFromUrl = window.location.href.split("/email-verification/")[1];
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  function checkToken() {
+    if (localStorage.getItem("email-token") && tokenFromUrl) {
+      console.log(tokenFromUrl, token);
+
+      if (tokenFromUrl === token) {
+        localStorage.removeItem("email-token");
+  
+        // user verified
+      }
+    }
+  }
+
   return (
     <div className="flex flex-row justify-between">
       <div className="mt-28 mx-auto flex flex-col">
@@ -9,7 +29,6 @@ function verificationPage() {
         <span className="item-center text-lg">Nous vous avons envoyé un mail à l'adresse suivante :</span>
         <span className="secondary-glow-text text-lg">example@mail.com</span>
 
-        
       </div>
 
       <PlasmaLogo />
@@ -17,4 +36,4 @@ function verificationPage() {
   );
 }
 
-export default verificationPage
+export default VerificationPage;

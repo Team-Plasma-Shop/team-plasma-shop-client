@@ -2,7 +2,7 @@ import emailjs from 'emailjs-com';
 import cryptoRandomString from 'crypto-random-string';
 
 function sendEmail(username: string, email: string) {
-  const token = cryptoRandomString({ length: 16 }); 
+  const token = cryptoRandomString({ length: 32 }); 
   
   emailjs.init("_59c55TtwUaLLBZb2");
   
@@ -15,7 +15,7 @@ function sendEmail(username: string, email: string) {
   emailjs.send('service_ndza62c', 'template_wkm63km', e)
     .then((result) => {
       console.log(result.text);
-      localStorage.setItem("email-token", JSON.stringify(token));
+      localStorage.setItem("email-token", token);
     }, (error) => {
       console.log(error.text);
     });
