@@ -51,7 +51,7 @@ function HomePage() {
             <NeoButton text="Ajouter un Pokémon" handleClick={()=>{setIsAdding(!isAdding)}} colorText="primary" moreStyle="px-6"></NeoButton>
             {
               isAdding ? 
-                createPortal(<AddPokemonModal/>, document.body) : null
+                createPortal(<AddPokemonModal handleClose={()=>{setIsAdding(!isAdding)}}/>, document.body) : null
             
             }
             <div className="grid grid-cols-4 mt-8">
