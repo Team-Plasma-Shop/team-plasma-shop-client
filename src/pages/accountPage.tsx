@@ -83,6 +83,7 @@ function AccountPage() {
 
   async function setUserInfo() {
     const currentUserInfo = await getCurrentUserInfo()
+  
     if (currentUserInfo) {
       setUsername(currentUserInfo.username)
       setEmail(currentUserInfo.email)
