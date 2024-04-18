@@ -82,10 +82,8 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
             
             const data = {
                 ...selectedPokemon,
-                owner: currentUser.id,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                sold: false
+                price: 10000,
+                owner: currentUser['@id'],
             }
             console.log(data);
             
