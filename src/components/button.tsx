@@ -1,7 +1,7 @@
 type colorTypes = 'primary' | 'secondary' | 'danger'
 type textTypes = 'text-sm' | 'text-base' | 'text-lg' | 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl' | 'text-5xl'
 
-function NeoButton({handleClick, text, colorText, sizeText, moreStyle} : {text: string, handleClick: () => any, colorText: colorTypes, sizeText?: textTypes, moreStyle?: string}) {
+function NeoButton({handleClick, text, colorText, sizeText, moreStyle} : {text: string, handleClick?: () => any, colorText: colorTypes, sizeText?: textTypes, moreStyle?: string}) {
     
     const twText = () => {
         switch (colorText) {

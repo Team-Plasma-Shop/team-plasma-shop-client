@@ -45,6 +45,21 @@ function HomePage() {
     return pokemon.owner === user["@id"]
   }
 
+  function buying(){
+    console.log("Buy");
+    
+  }
+
+  function deleteD(){
+    console.log("Delete");
+    
+  }
+
+  function edit(){
+    console.log("edit");
+    
+  }
+
   return (
 
     <section className="mt-20">
@@ -65,7 +80,7 @@ function HomePage() {
 
               pokemons && user ?
                 pokemons.map((pokemon) => {
-                  return <PokemonCard key={pokemon.id} pokemon={pokemon} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isReleasable={isUserPokemon(pokemon,user)}></PokemonCard>
+                  return <PokemonCard key={pokemon.id} pokemon={pokemon} buyCallback={buying} editCallback={edit} deleteCallback={deleteD} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isDeletable={isUserPokemon(pokemon,user)}></PokemonCard>
                 }) : null
             }
           </div>
