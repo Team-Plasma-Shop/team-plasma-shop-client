@@ -1,4 +1,4 @@
-async function fetchPokemons() {
+export async function fetchPokemonsData() {
 
     const response = await fetch(`${process.env.REACT_APP_API_ROUTE}pokemons`, {
         method: "GET",
@@ -10,5 +10,3 @@ async function fetchPokemons() {
 
     return response
 }
-
-export default fetchPokemons
