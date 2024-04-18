@@ -48,7 +48,7 @@ function AccountPage() {
 
   const users: User[] = [
     {
-      uuid: '1',
+      id: '1',
       username: 'john_doe',
       email: 'john.doe@example.com',
       password: 'password123',
@@ -57,7 +57,7 @@ function AccountPage() {
       createdAt: new Date(),
     },
     {
-      uuid: '2',
+      id: '2',
       username: 'jane_doe',
       email: 'jane.doe@example.com',
       password: 'password456',
@@ -66,7 +66,7 @@ function AccountPage() {
       createdAt: new Date(),
     },
     {
-      uuid: '3',
+      id: '3',
       username: 'admin_user',
       email: 'admin.user@example.com',
       password: 'adminPassword',
@@ -75,7 +75,7 @@ function AccountPage() {
       createdAt: new Date(),
     },
     {
-      uuid: '4',
+      id: '4',
       username: 'guest_user',
       email: 'guest.user@example.com',
       password: 'guestPassword',
@@ -84,7 +84,7 @@ function AccountPage() {
       createdAt: new Date(),
     },
     {
-      uuid: '5',
+      id: '5',
       username: 'test_user',
       email: 'test.user@example.com',
       password: 'testPassword',
