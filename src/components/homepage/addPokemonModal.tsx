@@ -1,105 +1,122 @@
-import { ChangeEvent, useState } from 'react';
-import { Pokemon } from '../../models/pokemon';
-import NeoButton from "../button"
-import { getCurrentUserInfo } from '../../utils/getCurrentUserInfo';
+import { ChangeEvent, useState } from "react";
+import { Pokemon } from "../../models/pokemon";
+import NeoButton from "../button";
+import { getCurrentUserInfo } from "../../utils/getCurrentUserInfo";
 
 const pokemons = [
-    {
-        name: "Charizard",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png",
-        type: "Feu"
-    },
-    {
-        name: "Blastoise",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/009.png",
-        type: "Eau"
-    },
-    {
-        name: "Vaporeon",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/134.png",
-        type: "Eau"
-    },
-    {
-        name: "Arcanine",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/059.png",
-        type: "Feu"
-    },
-    {
-        name: "Gyarados",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/130.png",
-        type: "Eau"
-    },
-    {
-        name: "Magmar",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/126.png",
-        type: "Feu"
-    },
-    {
-        name: "Feraligatr",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/160.png",
-        type: "Eau"
-    },
-    {
-        name: "Typhlosion",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/157.png",
-        type: "Feu"
-    },
-    {
-        name: "Swampert",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/260.png",
-        type: "Eau"
-    },
-    {
-        name: "Blaziken",
-        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/257.png",
-        type: "Feu"
-    }
+  {
+    name: "Charizard",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png",
+    type: "Feu",
+  },
+  {
+    name: "Blastoise",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/009.png",
+    type: "Eau",
+  },
+  {
+    name: "Vaporeon",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/134.png",
+    type: "Eau",
+  },
+  {
+    name: "Arcanine",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/059.png",
+    type: "Feu",
+  },
+  {
+    name: "Gyarados",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/130.png",
+    type: "Eau",
+  },
+  {
+    name: "Magmar",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/126.png",
+    type: "Feu",
+  },
+  {
+    name: "Feraligatr",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/160.png",
+    type: "Eau",
+  },
+  {
+    name: "Typhlosion",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/157.png",
+    type: "Feu",
+  },
+  {
+    name: "Swampert",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/260.png",
+    type: "Eau",
+  },
+  {
+    name: "Blaziken",
+    imageLink:
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/257.png",
+    type: "Feu",
+  },
 ];
 
 function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
+  interface Pokemon {
+    name: string;
+    imageLink: string; //Je veux les artwork official
+    type: string;
+  }
 
-    interface Pokemon {
-        name: string,
-        imageLink: string, //Je veux les artwork official
-        type: string
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>(pokemons[0]);
+  const [price, setPrice] = useState<number>();
+  const [sucess, setSucess] = useState("");
+  const [error, setError] = useState("");
+
+  function changeSelectedPokemon(e: ChangeEvent<HTMLSelectElement>) {
+    const pokemon = pokemons.find((pokemon) => pokemon.name === e.target.value);
+
+    if (pokemon) {
+      setSelectedPokemon(pokemon);
     }
+  }
 
-    const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>(pokemons[0])
-    const [price, setPrice] = useState<number>()
+  async function addNewPokemon() {
+    const currentUser = await getCurrentUserInfo();
 
-    function changeSelectedPokemon(e: ChangeEvent<HTMLSelectElement>) {
-        const pokemon = pokemons.find((pokemon) => pokemon.name === e.target.value)
+    if (currentUser) {
+      const data = {
+        ...selectedPokemon,
+        price: price,
+        owner: currentUser["@id"],
+      };
 
-        if (pokemon) {
-            setSelectedPokemon(pokemon)
+      const response = await fetch(
+        `${process.env.REACT_APP_API_ROUTE}pokemons`,
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         }
+      );
+
+      if (!response.ok) {
+        setError("Une erreur s'est produite, veuillez ressayer plus tard");
+      } else {
+        setSucess(
+          "Votre annonce a bien été publié ! Nous prenons 30% des gains"
+        );
+      }
     }
-
-    async function addNewPokemon() {
-        const currentUser = await getCurrentUserInfo()
-
-        if (currentUser) {
-            console.log(currentUser);
-            
-            const data = {
-                ...selectedPokemon,
-                price: price,
-                owner: currentUser['@id'],
-            }
-            console.log(data);
-            
-            const response = await fetch(`${process.env.REACT_APP_API_ROUTE}pokemons`, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            })
-        }
-
-
-    }
+  }
 
     return (
         <>
@@ -133,4 +150,4 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
     )
 }
 
-export default AddPokemonModal
+export default AddPokemonModal;
