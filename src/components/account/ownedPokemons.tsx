@@ -8,7 +8,7 @@ function OwnedPokemon({pokemons}: {pokemons: Pokemon[]}){
         <div className="grid grid-cols-4 mt-8">
             {
               pokemons.map((pokemon) => {
-                return <PokemonCard key={pokemon.uuid} pokemon={pokemon} isBuyable={false} isReleasable={true}></PokemonCard>
+                return <PokemonCard key={pokemon.id} pokemon={pokemon} isBuyable={false} isReleasable={true}></PokemonCard>
               } )
             }
             </div>
