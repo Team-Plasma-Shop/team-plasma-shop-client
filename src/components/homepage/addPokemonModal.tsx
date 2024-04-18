@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Pokemon } from '../../models/pokemon';
 import NeoButton from "../button"
 
-function AddPokemonModal(){
+function AddPokemonModal({handleClose}:{handleClose: ()=>any}) {
     const pokemons: Pokemon[] = [
         {
           id: '1',
@@ -34,16 +34,17 @@ function AddPokemonModal(){
           isSold: true,
           modifiedAt: new Date(),
         },
-      ];
+    ];
 
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>(pokemons[0])
 
-    function changeSelectedPokemon(e: Event){
+    function changeSelectedPokemon(e: Event) {
         console.log(e)
     }
 
-    return(
-        <div className="absolute p-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-96 h-fit shadow-outerNeo bg-background flex flex-col gap-4 ">
+    return (
+        <>
+            <div className="absolute z-10 p-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-96 h-fit shadow-outerNeo bg-background flex flex-col gap-4 ">
 
             <div>
                 <img className="w-3/4 m-auto" src={selectedPokemon.imageLink} alt="" />
@@ -65,6 +66,7 @@ function AddPokemonModal(){
             
             <NeoButton text="Ajouter" colorText="primary" handleClick={()=>{}} moreStyle="w-full"></NeoButton>
         </div>
+        </>
     )
 }
 
