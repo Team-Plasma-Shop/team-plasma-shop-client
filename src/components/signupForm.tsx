@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
 import { StatusCodes } from "http-status-codes";
-import { sendEmail } from "./email";
+import { useNavigate } from "react-router-dom";
 
 interface InputData {
   username: string;
@@ -12,6 +12,7 @@ interface InputData {
 
 function SignupForm() {
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<InputData>();
   const [formData, setFormData] = useState<InputData>({
     username: "",
@@ -19,18 +20,20 @@ function SignupForm() {
     password: ""
   });
 
-  async function postData() {
-    const data = {
-      ...formData,
+  const onSubmit: SubmitHandler<InputData> = async (data) => {
+
+    const newdata = {
+      ...data,
       verified: false,
       createdAt: new Date()
     }
-  
+
     if (formData.password.length < 6 || !/[A-Z]/.test(formData.password) || !/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
+      
       setError("Le mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spécial");
       return;
     }
-  
+
     if (formData.username.length < 4 || !/^[a-zA-Z0-9]+$/.test(formData.username)) {
       setError("Le nom d'utilisateur doit contenir uniquement des lettres et des chiffres sans espaces ni caractères spéciaux");
       return;
@@ -42,23 +45,23 @@ function SignupForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(newdata),
     });
-  
-    // if (response.status === StatusCodes.CREATED) {
-    // if (response.status === StatusCodes.CREATED) {
-    //   // Appeler sendEmail uniquement si l'enregistrement des données est réussi
-    //   sendEmail(formData.username, formData.email);
-    // } else {
-    //   // Gérer les erreurs en fonction de la réponse de l'API
-    //   setError("Une erreur s'est produite lors de l'enregistrement des données.");
-    // }
+    if (!response.ok) {
+      setError("Erreur, veuillez ressayer plus tard");
+      return;
+    }
+
+    if (response.ok) {
+      navigate("/email-verification")
+    }
+        
     sendEmail(formData.username, formData.email);
-  }  
+  };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(postData)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-5">
           <div className="shadow-outerNeo rounded-md">
             <input
@@ -106,7 +109,7 @@ function SignupForm() {
         </div>
 
         <NeoButton
-          handleClick={postData}
+          handleClick={handleSubmit(onSubmit)}
           text="Marché conclu !"
           colorText="secondary"
           sizeText="text-sm"

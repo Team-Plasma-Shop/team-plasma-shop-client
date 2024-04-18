@@ -1,9 +1,8 @@
 export interface User {
-  uuid: string;
+  '@id'?: string
+  id: string;
   username: string;
   email: string;
-  password: string;
   isVerified: boolean;
   role: string[];
-  createdAt: Date;
 }

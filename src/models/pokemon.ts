@@ -1,12 +1,11 @@
 export
 interface Pokemon {
-  uuid: string;
+  id: string;
   name: string;
   imageLink: string;
   price: number;
   type: string;
   owner: string;
-  isSold: boolean
-  createdAt: Date;
-  modifiedAt: Date;
+  isSold?: boolean
+  modifiedAt?: Date;
 }
