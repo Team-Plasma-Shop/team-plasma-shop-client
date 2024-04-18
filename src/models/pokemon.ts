@@ -6,5 +6,6 @@ interface Pokemon {
   price: number;
   type: string;
   owner: string;
+  isSold?: boolean
   modifiedAt?: Date;
 }
