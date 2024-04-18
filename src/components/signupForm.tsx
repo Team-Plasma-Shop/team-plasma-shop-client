@@ -13,22 +13,28 @@ function SignupForm() {
   const [formData, setFormData] = useState<InputData>({
     username: "",
     email: "",
-    password: "",
+    password: ""
   });
 
   const onSubmit: SubmitHandler<InputData> = (data) => postData();
 
   async function postData() {
-    console.log(formData);
+   
+    const data = {
+      ...formData,
+      verified: false,
+      createdAt: new Date()
+    }
 
-    const response = await fetch("http://127.0.0.1:8000/users", {
+    
+    const response = await fetch(`${process.env.REACT_APP_API_ROUTE}users`, {
       method: "POST",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(data),
     });
-    console.log(response);
   }
 
   return (
