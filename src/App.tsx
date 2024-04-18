@@ -1,29 +1,30 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import HomePage from "./pages/homePage";
-import LoginPage from "./pages/loginPage";
-import AboutPage from "./pages/aboutPage";
-import SignupPage from "./pages/signupPage";
-import Header from "./components/header";
-import AccountPage from "./pages/accountPage";
-import TOTPPage from "./pages/totpPage";
-import PrivateRoutes from "./utils/PrivateRoute";
+import HomePage from './pages/homePage';
+import LoginPage from './pages/loginPage';
+import AboutPage from './pages/aboutPage';
+import SignupPage from './pages/signupPage';
+import Header from './components/header';
+import AccountPage from './pages/accountPage';
+import TOTPPage from './pages/totpPage';
+import PrivateRoutes from './utils/PrivateRoute';
 
 function App() {
   return (
     <div>
       <Router>
-        <Header></Header>
+      <Header></Header>
         <Routes>
-          <Route element={<PrivateRoutes />}>
+          <Route element={<PrivateRoutes/>}>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/account" element={<AccountPage />} />
+            <Route path="/account" element={<AccountPage/>} />
           </Route>
-
+          
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/totp" element={<TOTPPage />} />
+        
         </Routes>
       </Router>
     </div>

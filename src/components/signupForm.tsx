@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
-import { StatusCodes } from "http-status-codes";
-import { sendEmail } from "./email";
 
 interface InputData {
   username: string;
@@ -20,21 +18,24 @@ function SignupForm() {
   });
 
   async function postData() {
+   
     const data = {
       ...formData,
       verified: false,
       createdAt: new Date()
     }
-  
+
     if (formData.password.length < 6 || !/[A-Z]/.test(formData.password) || !/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
+      
       setError("Le mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spécial");
       return;
     }
-  
+
     if (formData.username.length < 4 || !/^[a-zA-Z0-9]+$/.test(formData.username)) {
       setError("Le nom d'utilisateur doit contenir uniquement des lettres et des chiffres sans espaces ni caractères spéciaux");
       return;
     }
+
     
     const response = await fetch(`${process.env.REACT_APP_API_ROUTE}users`, {
       method: "POST",
@@ -44,16 +45,7 @@ function SignupForm() {
       },
       body: JSON.stringify(data),
     });
-  
-    // if (response.status === StatusCodes.CREATED) {
-      if (response.status === StatusCodes.CREATED) {
-      // Appeler sendEmail uniquement si l'enregistrement des données est réussi
-      sendEmail(formData.username, formData.email);
-    } else {
-      // Gérer les erreurs en fonction de la réponse de l'API
-      setError("Une erreur s'est produite lors de l'enregistrement des données.");
-    }
-  }  
+  }
 
   return (
     <div>
