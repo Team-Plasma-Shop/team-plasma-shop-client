@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
 import { StatusCodes } from "http-status-codes";
-import { jwtDecode } from "jwt-decode";
-import { getTokenFromLs } from "../utils/getTokenFromLs";
+import { useNavigate } from "react-router-dom";
 
 interface InputData {
   email: string;
@@ -16,6 +15,7 @@ function LoginForm() {
 
   const { register, handleSubmit } = useForm<InputData>();
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<InputData> = async (data) => {
 
@@ -37,7 +37,11 @@ function LoginForm() {
       }
     }
     const token = await response.json()
-    localStorage.setItem("token", JSON.stringify(token));    
+    localStorage.setItem("token", JSON.stringify(token));
+
+    navigate("/")
+
+  
   };
 
   return (
