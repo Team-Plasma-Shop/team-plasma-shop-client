@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getTokenFromLs } from "./getTokenFromLs"
 import { Navigate, Outlet } from "react-router-dom"
+import { jwtDecode } from "jwt-decode"
 
 function PrivateRoutes(){
 
@@ -8,7 +9,14 @@ function PrivateRoutes(){
 
     useEffect(()=>{
         const lsToken = getTokenFromLs()
-        lsToken ? setAuthToken(lsToken) : setAuthToken(null)        
+        if (lsToken) {
+            const decodedToken = jwtDecode(lsToken)
+            if (decodedToken && decodedToken.exp) {
+                setAuthToken(lsToken)
+                return;
+            }    
+        }
+        setAuthToken(null)     
     }, [])
 
     return(
