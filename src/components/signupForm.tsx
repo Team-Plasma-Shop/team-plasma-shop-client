@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
 import { StatusCodes } from "http-status-codes";
 import { useNavigate } from "react-router-dom";
+import { sendEmail } from "./email";
 
 interface InputData {
   username: string;
@@ -21,20 +22,12 @@ function SignupForm() {
   });
 
   const onSubmit: SubmitHandler<InputData> = async (data) => {
-
-    const newdata = {
-      ...data,
-      verified: false,
-      createdAt: new Date()
-    }
-
-    if (formData.password.length < 6 || !/[A-Z]/.test(formData.password) || !/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
-      
+    if (data.password.length < 6 || !/[A-Z]/.test(data.password) || !/[!@#$%^&*(),.?":{}|<>]/.test(data.password)) {
       setError("Le mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spécial");
       return;
     }
 
-    if (formData.username.length < 4 || !/^[a-zA-Z0-9]+$/.test(formData.username)) {
+    if (data.username.length < 4 || !/^[a-zA-Z0-9]+$/.test(data.username)) {
       setError("Le nom d'utilisateur doit contenir uniquement des lettres et des chiffres sans espaces ni caractères spéciaux");
       return;
     }
@@ -45,18 +38,18 @@ function SignupForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newdata),
+      body: JSON.stringify(data),
     });
+
     if (!response.ok) {
       setError("Erreur, veuillez ressayer plus tard");
       return;
     }
-
+    
     if (response.ok) {
+      sendEmail(data.username, data.email);
       navigate("/email-verification")
     }
-        
-    sendEmail(formData.username, formData.email);
   };
 
   return (

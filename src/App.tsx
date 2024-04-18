@@ -25,6 +25,7 @@ function App() {
           </Route>
           
           <Route path="/email-verification" element={<VerificationPage />} />
+          <Route path="/email-verification/:token" element={<VerificationPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/totp" element={<TOTPPage />} />
