@@ -5,36 +5,33 @@ import NeoButton from "../button"
 function AddPokemonModal(){
     const pokemons: Pokemon[] = [
         {
-          uuid: '1',
+          id: '1',
           name: 'Bulbasaur',
           imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
           price: 100,
           type: 'Grass',
           owner: 'Ash Ketchum',
           isSold: false,
-          createdAt: new Date(),
           modifiedAt: new Date(),
         },
         {
-          uuid: '2',
+          id: '2',
           name: 'Charmander',
           imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
           price: 150,
           type: 'Fire',
           owner: 'Gary Oak',
           isSold: false,
-          createdAt: new Date(),
           modifiedAt: new Date(),
         },
         {
-          uuid: '3',
+          id: '3',
           name: 'Squirtle',
           imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
           price: 120,
           type: 'Water',
           owner: 'Misty',
           isSold: true,
-          createdAt: new Date(),
           modifiedAt: new Date(),
         },
       ];
@@ -56,7 +53,7 @@ function AddPokemonModal(){
                 <select className='text-2xl font-semibold bg-transparent' onChange={() =>changeSelectedPokemon}>
                     {
                         pokemons.map((pokemon) => {
-                            return (<option className='text-2xl bg-transparent appearance-none' value={pokemon.uuid}>{pokemon.name}</option>)
+                            return (<option className='text-2xl bg-transparent appearance-none' value={pokemon.id}>{pokemon.name}</option>)
                         })
                     }
                 </select>
