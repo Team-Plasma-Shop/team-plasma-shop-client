@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
+import { StatusCodes } from "http-status-codes";
+import Email from "./email";
 
 interface InputData {
   username: string;
@@ -18,7 +20,6 @@ function SignupForm() {
   });
 
   async function postData() {
-   
     const data = {
       ...formData,
       verified: false,
@@ -35,7 +36,6 @@ function SignupForm() {
       setError("Le nom d'utilisateur doit contenir uniquement des lettres et des chiffres sans espaces ni caractères spéciaux");
       return;
     }
-
     
     const response = await fetch(`${process.env.REACT_APP_API_ROUTE}users`, {
       method: "POST",
@@ -45,6 +45,23 @@ function SignupForm() {
       },
       body: JSON.stringify(data),
     });
+    console.log(response);
+    
+  }
+
+  function senEmail(response: any) {
+    console.log("Envoi de l'email");
+    if (!response.ok) {
+      if (response.status === StatusCodes.UNAUTHORIZED) {
+        setError("Vos identifiants sont invalides")
+        return;
+      } else{
+        setError("Erreur, veuillez ressayer plus tard (c'est peut-être à cause de Thomas Eole...)")
+      }
+    } else if (response.ok) {
+      Email(formData.username, formData.email, "Veuillez confirmer votre adresse email");
+      console.log("Email envoyé");
+    }
   }
 
   return (
