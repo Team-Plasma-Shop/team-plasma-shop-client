@@ -16,7 +16,7 @@ function VerificationPage() {
       if (tokenFromUrl === token) {
         localStorage.removeItem("email-token");
   
-        // user verified
+        // TODO: verify user and redirect
       }
     }
   }
@@ -27,6 +27,8 @@ function VerificationPage() {
         <span className="text-4xl pr-24 mb-10">Veuillez consulter vos <span className="danger-glow-text">emails</span></span>
 
         <span className="item-center text-lg">Nous vous avons envoyé un mail à l'adresse suivante :</span>
+        
+        {/* TODO: email dynamix !!!!! */}
         <span className="secondary-glow-text text-lg">example@mail.com</span>
 
       </div>
