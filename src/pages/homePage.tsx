@@ -4,9 +4,9 @@ import PokemonCard from "../components/pokemonCard";
 import { Pokemon } from "../models/pokemon";
 import { createPortal } from "react-dom";
 import AddPokemonModal from "../components/homepage/addPokemonModal";
-import fetchPokemons from "../services/fetchPokemons";
 import { User } from "../models/user";
 import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
+import { fetchPokemonsData } from "../services/fetchPokemons";
 
 function HomePage() {
 
@@ -15,7 +15,7 @@ function HomePage() {
   const [user, setUser] = useState<User | null>()
 
   async function getPokemons() {
-    const response = await fetchPokemons()
+    const response = await fetchPokemonsData()
     let pokemonsArray: Pokemon[] = [];
 
     if (!response.ok) {
