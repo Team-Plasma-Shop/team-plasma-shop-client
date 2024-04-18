@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { Pokemon } from '../../models/pokemon';
 import NeoButton from "../button"
+import { getCurrentUserInfo } from '../../utils/getCurrentUserInfo';
 
 const pokemons = [
     {
@@ -55,9 +56,9 @@ const pokemons = [
     }
 ];
 
-function AddPokemonModal({handleClose}:{handleClose: ()=>any}) {
+function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
 
-    interface Pokemon{
+    interface Pokemon {
         name: string,
         imageLink: string, //Je veux les artwork official
         type: string
@@ -66,29 +67,39 @@ function AddPokemonModal({handleClose}:{handleClose: ()=>any}) {
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>(pokemons[0])
 
     function changeSelectedPokemon(e: ChangeEvent<HTMLSelectElement>) {
-        const pokemon = pokemons.find((pokemon) => pokemon.name === e.target.value) 
+        const pokemon = pokemons.find((pokemon) => pokemon.name === e.target.value)
 
         if (pokemon) {
             setSelectedPokemon(pokemon)
         }
     }
 
-    async function addNewPokemon(){
-        const data = {
-            ...selectedPokemon,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            sold: false
+    async function addNewPokemon() {
+        const currentUser = await getCurrentUserInfo()
+
+        if (currentUser) {
+            console.log(currentUser);
+            
+            const data = {
+                ...selectedPokemon,
+                owner: currentUser.id,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                sold: false
+            }
+            console.log(data);
+            
+            const response = await fetch(`${process.env.REACT_APP_API_ROUTE}pokemons`, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
         }
-        const response = await fetch(`${process.env.REACT_APP_API_ROUTE}pokemons`,{
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-        })
-        
+
+
     }
 
     return (
@@ -114,7 +125,7 @@ function AddPokemonModal({handleClose}:{handleClose: ()=>any}) {
                 </label>
 
 
-                <NeoButton text="Ajouter" colorText="primary" handleClick={() => { }} moreStyle="w-full"></NeoButton>
+                <NeoButton text="Ajouter" colorText="primary" handleClick={addNewPokemon} moreStyle="w-full"></NeoButton>
             </div>
             <div onClick={handleClose} className='absolute top-0 left-0 w-screen h-screen bg-background opacity-50'>
 
