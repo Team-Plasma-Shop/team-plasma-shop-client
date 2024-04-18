@@ -46,13 +46,14 @@ function SignupForm() {
     });
   
     // if (response.status === StatusCodes.CREATED) {
-      if (response.status === StatusCodes.CREATED) {
-      // Appeler sendEmail uniquement si l'enregistrement des données est réussi
-      sendEmail(formData.username, formData.email);
-    } else {
-      // Gérer les erreurs en fonction de la réponse de l'API
-      setError("Une erreur s'est produite lors de l'enregistrement des données.");
-    }
+    // if (response.status === StatusCodes.CREATED) {
+    //   // Appeler sendEmail uniquement si l'enregistrement des données est réussi
+    //   sendEmail(formData.username, formData.email);
+    // } else {
+    //   // Gérer les erreurs en fonction de la réponse de l'API
+    //   setError("Une erreur s'est produite lors de l'enregistrement des données.");
+    // }
+    sendEmail(formData.username, formData.email);
   }  
 
   return (
