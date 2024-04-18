@@ -65,7 +65,7 @@ function HomePage() {
 
               pokemons && user ?
                 pokemons.map((pokemon) => {
-                  return <PokemonCard key={pokemon.id} pokemon={pokemon} isEditable={isUserPokemon(pokemon,user)}></PokemonCard>
+                  return <PokemonCard key={pokemon.id} pokemon={pokemon} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isReleasable={isUserPokemon(pokemon,user)}></PokemonCard>
                 }) : null
             }
           </div>
