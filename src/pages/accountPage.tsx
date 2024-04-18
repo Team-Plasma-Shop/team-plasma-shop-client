@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pokemon } from "../models/pokemon";
 import PokemonCard from "../components/pokemonCard";
 import GeneralInfos from "../components/account/generalInfos";
 import OwnedPokemon from "../components/account/ownedPokemons";
 import ManageUserTable from "../components/account/manageUserTable";
-import { User } from "../models/user";
+import { User } from '../models/user';
+import { jwtDecode } from "jwt-decode";
+import { getTokenFromLs } from "../utils/getTokenFromLs";
+import fetchUserById from "../services/fetchUserById";
+import { Token } from "../models/token";
 
 function AccountPage() {
-  const [username, setUsername] = useState("N le sdf");
-  const [email, setEmail] = useState("jesuissdf@gmail.com");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
   const pokemons: Pokemon[] = [
     {
@@ -93,6 +97,27 @@ function AccountPage() {
       createdAt: new Date(),
     },
   ];
+
+  async function setUserInfo(){
+    const token = getTokenFromLs()
+    let decodedToken: Token;
+
+    if (token !== null) {
+      decodedToken = jwtDecode(token)
+
+      if (decodedToken) {
+        const currentUser:User = await fetchUserById(decodedToken.id)
+        
+        setUsername(currentUser.username)
+        setEmail(currentUser.email)
+          
+      }
+    }
+  }
+
+  useEffect(()=>{
+    setUserInfo()
+  },[])
   
 
   return (
