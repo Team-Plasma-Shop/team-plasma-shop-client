@@ -1,5 +1,9 @@
+import { useState } from "react";
+import NeoButton from "../components/button";
 import PokemonCard from "../components/pokemonCard";
 import { Pokemon } from "../models/pokemon";
+import { createPortal } from "react-dom";
+import AddPokemonModal from "../components/homepage/addPokemonModal";
 
 function HomePage() {
 
@@ -37,9 +41,9 @@ function HomePage() {
       createdAt: new Date(),
       modifiedAt: new Date(),
     },
-    // Ajoutez d'autres Pokémon selon vos besoins
   ];
-  
+
+  const [isAdding, setIsAdding] = useState(false)
 
   return (
     
@@ -47,6 +51,12 @@ function HomePage() {
             <h1 className="text-4xl font-semibold">En stock</h1>
             <p className="text-base w-2/4 mt-5 opacity-60">Volés avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma !</p>
 
+            <NeoButton text="Ajouter un Pokémon" handleClick={()=>{setIsAdding(!isAdding)}} colorText="primary" moreStyle="px-6"></NeoButton>
+            {
+              isAdding ? 
+                createPortal(<AddPokemonModal/>, document.body) : null
+            
+            }
             <div className="grid grid-cols-4 mt-8">
             {
               pokemons.map((pokemon) => {
