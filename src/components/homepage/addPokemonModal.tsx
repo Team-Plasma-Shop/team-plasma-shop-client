@@ -1,48 +1,94 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Pokemon } from '../../models/pokemon';
 import NeoButton from "../button"
 
+const pokemons = [
+    {
+        name: "Charizard",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png",
+        type: "Feu"
+    },
+    {
+        name: "Blastoise",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/009.png",
+        type: "Eau"
+    },
+    {
+        name: "Vaporeon",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/134.png",
+        type: "Eau"
+    },
+    {
+        name: "Arcanine",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/059.png",
+        type: "Feu"
+    },
+    {
+        name: "Gyarados",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/130.png",
+        type: "Eau"
+    },
+    {
+        name: "Magmar",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/126.png",
+        type: "Feu"
+    },
+    {
+        name: "Feraligatr",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/160.png",
+        type: "Eau"
+    },
+    {
+        name: "Typhlosion",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/157.png",
+        type: "Feu"
+    },
+    {
+        name: "Swampert",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/260.png",
+        type: "Eau"
+    },
+    {
+        name: "Blaziken",
+        imageLink: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/257.png",
+        type: "Feu"
+    }
+];
+
 function AddPokemonModal({handleClose}:{handleClose: ()=>any}) {
-    const pokemons: Pokemon[] = [
-        {
-            uuid: '1',
-            name: 'Bulbasaur',
-            imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-            price: 100,
-            type: 'Grass',
-            owner: 'Ash Ketchum',
-            isSold: false,
-            createdAt: new Date(),
-            modifiedAt: new Date(),
-        },
-        {
-            uuid: '2',
-            name: 'Charmander',
-            imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
-            price: 150,
-            type: 'Fire',
-            owner: 'Gary Oak',
-            isSold: false,
-            createdAt: new Date(),
-            modifiedAt: new Date(),
-        },
-        {
-            uuid: '3',
-            name: 'Squirtle',
-            imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
-            price: 120,
-            type: 'Water',
-            owner: 'Misty',
-            isSold: true,
-            createdAt: new Date(),
-            modifiedAt: new Date(),
-        },
-    ];
+
+    interface Pokemon{
+        name: string,
+        imageLink: string, //Je veux les artwork official
+        type: string
+    }
 
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>(pokemons[0])
 
-    function changeSelectedPokemon(e: Event) {
-        console.log(e)
+    function changeSelectedPokemon(e: ChangeEvent<HTMLSelectElement>) {
+        const pokemon = pokemons.find((pokemon) => pokemon.name === e.target.value) 
+
+        if (pokemon) {
+            setSelectedPokemon(pokemon)
+        }
+    }
+
+    async function addNewPokemon(){
+        const data = {
+            ...selectedPokemon,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            sold: false
+        }
+        const response = await fetch(`${process.env.REACT_APP_API_ROUTE}pokemons`,{
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+        })
+        
     }
 
     return (
@@ -54,10 +100,10 @@ function AddPokemonModal({handleClose}:{handleClose: ()=>any}) {
                 </div>
                 <label>
 
-                    <select className='text-2xl font-semibold bg-transparent' onChange={() => changeSelectedPokemon}>
+                    <select className='text-2xl font-semibold bg-transparent' onChange={(e) => changeSelectedPokemon(e)}>
                         {
                             pokemons.map((pokemon) => {
-                                return (<option className='text-2xl bg-transparent appearance-none' value={pokemon.uuid}>{pokemon.name}</option>)
+                                return (<option key={pokemon.imageLink} className='text-2xl bg-background' value={pokemon.name}>{pokemon.name}</option>)
                             })
                         }
                     </select>
