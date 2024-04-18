@@ -5,11 +5,14 @@ import { Pokemon } from "../models/pokemon";
 import { createPortal } from "react-dom";
 import AddPokemonModal from "../components/homepage/addPokemonModal";
 import fetchPokemons from "../services/fetchPokemons";
+import { User } from "../models/user";
+import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
 
 function HomePage() {
 
   const [pokemons, setPokemons] = useState<Pokemon[]>()
   const [error, setError] = useState("")
+  const [user, setUser] = useState<User | null>()
 
   async function getPokemons() {
     const response = await fetchPokemons()
@@ -25,11 +28,22 @@ function HomePage() {
 
     setPokemons(pokemonsArray)
   }
+
+  async function setCurrentUser(){
+    const currentUser = await getCurrentUserInfo()
+    setUser(currentUser)
+  }
+
   useEffect(() => {
     getPokemons()
+    setCurrentUser()
   }, [])
 
   const [isAdding, setIsAdding] = useState(false)
+
+  function isUserPokemon(pokemon:Pokemon, user:User){
+    return pokemon.owner === user["@id"]
+  }
 
   return (
 
@@ -49,9 +63,9 @@ function HomePage() {
           <div className="grid grid-cols-4 mt-8 gap-9">
             {
 
-              pokemons ?
+              pokemons && user ?
                 pokemons.map((pokemon) => {
-                  return <PokemonCard key={pokemon.id} pokemon={pokemon}></PokemonCard>
+                  return <PokemonCard key={pokemon.id} pokemon={pokemon} isEditable={isUserPokemon(pokemon,user)}></PokemonCard>
                 }) : null
             }
           </div>
