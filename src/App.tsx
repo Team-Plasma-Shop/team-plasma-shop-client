@@ -21,9 +21,9 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/admin" element={<AdminPage />}></Route>
           </Route>
           
-          <Route path="/admin" element={<AdminPage />}></Route>
           <Route path="/email-verification" element={<VerificationPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
