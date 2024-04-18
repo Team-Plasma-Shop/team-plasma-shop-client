@@ -15,6 +15,8 @@ function VerificationPage() {
 
       if (tokenFromUrl === token) {
         localStorage.removeItem("email-token");
+        console.log("UTILISATEUR VERIFIE");
+        
   
         // TODO: verify user and redirect
       }
