@@ -1,4 +1,3 @@
-import { log } from "console";
 import { Pokemon } from "../models/pokemon";
 import NeoButton from "./button";
 
@@ -25,8 +24,6 @@ function PokemonCard({ pokemon, isBuyable = true, isDeletable = false, isEditabl
                     isDeletable ? (<NeoButton handleClick={deleteCallback} text="Supprimer" colorText="danger" sizeText="text-base" moreStyle="flex-1 "></NeoButton>) : null
                 }
             </div>
-
-
 
         </div>
     )

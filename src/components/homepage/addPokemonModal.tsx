@@ -86,6 +86,7 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
     }
   }
 
+
   async function addNewPokemon() {
     const currentUser = await getCurrentUserInfo();
 
