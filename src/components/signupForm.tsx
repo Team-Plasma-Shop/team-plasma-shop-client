@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
 import { StatusCodes } from "http-status-codes";
-import Email from "./email";
+import { sendEmail } from "./email";
 
 interface InputData {
   username: string;
@@ -25,13 +25,12 @@ function SignupForm() {
       verified: false,
       createdAt: new Date()
     }
-
+  
     if (formData.password.length < 6 || !/[A-Z]/.test(formData.password) || !/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
-      
       setError("Le mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spécial");
       return;
     }
-
+  
     if (formData.username.length < 4 || !/^[a-zA-Z0-9]+$/.test(formData.username)) {
       setError("Le nom d'utilisateur doit contenir uniquement des lettres et des chiffres sans espaces ni caractères spéciaux");
       return;
@@ -45,24 +44,16 @@ function SignupForm() {
       },
       body: JSON.stringify(data),
     });
-    console.log(response);
-    
-  }
-
-  function senEmail(response: any) {
-    console.log("Envoi de l'email");
-    if (!response.ok) {
-      if (response.status === StatusCodes.UNAUTHORIZED) {
-        setError("Vos identifiants sont invalides")
-        return;
-      } else{
-        setError("Erreur, veuillez ressayer plus tard (c'est peut-être à cause de Thomas Eole...)")
-      }
-    } else if (response.ok) {
-      Email(formData.username, formData.email, "Veuillez confirmer votre adresse email");
-      console.log("Email envoyé");
+  
+    // if (response.status === StatusCodes.CREATED) {
+      if (response.status === StatusCodes.CREATED) {
+      // Appeler sendEmail uniquement si l'enregistrement des données est réussi
+      sendEmail(formData.username, formData.email);
+    } else {
+      // Gérer les erreurs en fonction de la réponse de l'API
+      setError("Une erreur s'est produite lors de l'enregistrement des données.");
     }
-  }
+  }  
 
   return (
     <div>

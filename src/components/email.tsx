@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
 import emailjs from 'emailjs-com';
+import { useNavigate } from 'react-router-dom';
 
-const Email = (name: string, email: string, message: string) => {
-
+function sendEmail(username: string, email: string) {
+  
   emailjs.init("_59c55TtwUaLLBZb2");
-
+  
   const e = {
-    name: name,
+    name: username,
     email: email,
-    message: message
+    message: "Veuillez confirmer votre adresse email"
   };
 
-  useEffect(() => {
-    sendEmail();
-  }, []);
-
-  function sendEmail() {
-    emailjs.send('service_ndza62c', 'template_wkm63km', e)
-      .then((result) => {
-        console.log("Email sent");
-      }, (error) => {
-        console.log(error.text);
-      });
-  };
+  emailjs.send('service_ndza62c', 'template_wkm63km', e)
+    .then((result) => {
+      console.log(result.text);
+    }, (error) => {
+      console.log(error.text);
+    });
 };
 
-export default Email;
+export { sendEmail }
