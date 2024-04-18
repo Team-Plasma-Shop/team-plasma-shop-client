@@ -49,7 +49,7 @@ function SignupForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(postData)}>
+      <form>
         <div className="flex flex-col gap-5">
           <div className="shadow-outerNeo rounded-md">
             <input
