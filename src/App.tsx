@@ -8,6 +8,7 @@ import Header from "./components/header";
 import AccountPage from "./pages/accountPage";
 import TOTPPage from "./pages/totpPage";
 import PrivateRoutes from "./utils/PrivateRoute";
+import VerificationPage from "./pages/verificationPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/email-verification" element={<VerificationPage />}></Route>
           <Route path="/totp" element={<TOTPPage />} />
         </Routes>
       </Router>
