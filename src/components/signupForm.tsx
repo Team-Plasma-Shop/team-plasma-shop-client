@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
 import { StatusCodes } from "http-status-codes";
-import { sendEmail } from "./email";
 import { useNavigate } from "react-router-dom";
 
 interface InputData {
@@ -21,7 +20,6 @@ function SignupForm() {
     password: ""
   });
 
-
   const onSubmit: SubmitHandler<InputData> = async (data) => {
 
     const newdata = {
@@ -31,15 +29,16 @@ function SignupForm() {
     }
 
     if (formData.password.length < 6 || !/[A-Z]/.test(formData.password) || !/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
+      
       setError("Le mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spécial");
       return;
     }
-  
+
     if (formData.username.length < 4 || !/^[a-zA-Z0-9]+$/.test(formData.username)) {
       setError("Le nom d'utilisateur doit contenir uniquement des lettres et des chiffres sans espaces ni caractères spéciaux");
       return;
     }
-
+    
     const response = await fetch(`${process.env.REACT_APP_API_ROUTE}users`, {
       method: "POST",
       mode: "cors",
