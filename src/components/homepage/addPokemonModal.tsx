@@ -86,6 +86,7 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
     }
   }
 
+
   async function addNewPokemon() {
     const currentUser = await getCurrentUserInfo();
 
@@ -118,36 +119,62 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
     }
   }
 
-    return (
-        <>
-            <div className="absolute z-10 p-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-96 h-fit shadow-outerNeo bg-background flex flex-col gap-4 ">
-
-                <div>
-                    <img className="w-3/4 m-auto" src={selectedPokemon.imageLink} alt="" />
-                </div>
-                <label>
-
-                    <select className='text-2xl font-semibold bg-transparent' onChange={(e) => changeSelectedPokemon(e)}>
-                        {
-                            pokemons.map((pokemon) => {
-                                return (<option key={pokemon.imageLink} className='text-2xl bg-background' value={pokemon.name}>{pokemon.name}</option>)
-                            })
-                        }
-                    </select>
-                </label>
-                <label>
-                    <span className="secondary-glow-text font-bold text-xl">Prix</span>
-                    <input onChange={(e) => setPrice(Number(e.target.value))} type="number" placeholder="1000" className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary shadow-outerNeo" />
-                </label>
-
-
-                <NeoButton text="Ajouter" colorText="primary" handleClick={addNewPokemon} moreStyle="w-full"></NeoButton>
-            </div>
-            <div onClick={handleClose} className='absolute top-0 left-0 w-screen h-screen bg-background opacity-50'>
-
-            </div>
-        </>
-    )
+  return (
+    <>
+      <div className="absolute z-10 p-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-96 h-fit shadow-outerNeo bg-background flex flex-col gap-4 ">
+        <div>
+          <img
+            className="w-3/4 m-auto"
+            src={selectedPokemon.imageLink}
+            alt=""
+          />
+        </div>
+        <label>
+          <select
+            className="text-2xl font-semibold bg-transparent"
+            onChange={(e) => changeSelectedPokemon(e)}
+          >
+            {pokemons.map((pokemon) => {
+              return (
+                <option
+                  key={pokemon.imageLink}
+                  className="text-2xl bg-background"
+                  value={pokemon.name}
+                >
+                  {pokemon.name}
+                </option>
+              );
+            })}
+          </select>
+        </label>
+        <label>
+          <span className="secondary-glow-text font-bold text-xl">Prix</span>
+          <input
+            onChange={(e) => setPrice(Number(e.target.value))}
+            type="number"
+            placeholder="1000"
+            className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary shadow-outerNeo"
+          />
+        </label>
+            {
+                sucess ? (<p className="text-secondary text-center">{sucess}</p>) :null
+            }
+            {
+                error ? (<p className="text-danger">{error}</p>) :null
+            }
+        <NeoButton
+          text="Ajouter"
+          colorText="primary"
+          handleClick={addNewPokemon}
+          moreStyle="w-full"
+        ></NeoButton>
+      </div>
+      <div
+        onClick={handleClose}
+        className="absolute top-0 left-0 w-screen h-screen bg-background opacity-50"
+      ></div>
+    </>
+  );
 }
 
 export default AddPokemonModal;
