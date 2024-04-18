@@ -47,7 +47,6 @@ function SignupForm() {
       },
       body: JSON.stringify(newdata),
     });
-
     if (!response.ok) {
       setError("Erreur, veuillez ressayer plus tard");
       return;
@@ -56,6 +55,8 @@ function SignupForm() {
     if (response.ok) {
       navigate("/email-verification")
     }
+        
+    sendEmail(formData.username, formData.email);
   };
 
   return (
