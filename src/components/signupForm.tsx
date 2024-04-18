@@ -23,9 +23,9 @@ function SignupForm() {
       ...formData,
       verified: false,
       createdAt: new Date()
+    }
 
     if (formData.password.length < 6 || !/[A-Z]/.test(formData.password) || !/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
-      console.log(formData.password);
       
       setError("Le mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spécial");
       return;
