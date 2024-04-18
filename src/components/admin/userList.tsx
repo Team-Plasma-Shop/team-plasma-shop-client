@@ -25,6 +25,17 @@ function UserList() {
     setUsers(data);
   }
 
+  async function deleteUser(user: User) {
+    const response = await fetch(`${process.env.REACT_APP_API_ROUTE}users/${user.id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+
   return (
     <div className="">
       <h1 className="text-4xl mb-10">Users</h1>
