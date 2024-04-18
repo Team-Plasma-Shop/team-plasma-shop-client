@@ -37,7 +37,7 @@ function LoginForm() {
       }
     }
     const token = await response.json()
-    localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("token", JSON.stringify(token.token));
 
     navigate("/")
 

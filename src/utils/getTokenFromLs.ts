@@ -5,9 +5,10 @@ export function getTokenFromLs(): string | null {
         const tokenString = localStorage.getItem("token")
 
         if (tokenString !== null) {
-            token = JSON.parse(tokenString).token;
+            token = JSON.parse(tokenString);
 
         }
     }
+
     return token
 }
