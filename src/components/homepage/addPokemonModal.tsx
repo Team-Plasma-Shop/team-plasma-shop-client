@@ -65,6 +65,7 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
     }
 
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon>(pokemons[0])
+    const [price, setPrice] = useState<number>()
 
     function changeSelectedPokemon(e: ChangeEvent<HTMLSelectElement>) {
         const pokemon = pokemons.find((pokemon) => pokemon.name === e.target.value)
@@ -82,7 +83,7 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
             
             const data = {
                 ...selectedPokemon,
-                price: 10000,
+                price: price,
                 owner: currentUser['@id'],
             }
             console.log(data);
@@ -119,7 +120,7 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
                 </label>
                 <label>
                     <span className="secondary-glow-text font-bold text-xl">Prix</span>
-                    <input type="number" placeholder="1000" className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary shadow-outerNeo" />
+                    <input onChange={(e) => setPrice(Number(e.target.value))} type="number" placeholder="1000" className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary shadow-outerNeo" />
                 </label>
 
 
