@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import NeoButton from "../components/button";
 import PokemonCard from "../components/pokemonCard";
 import { Pokemon } from "../models/pokemon";
-import { createPortal } from "react-dom";
+import ReactDOM, { createPortal } from "react-dom";
 import AddPokemonModal from "../components/homepage/addPokemonModal";
 import { User } from "../models/user";
 import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
 import { fetchPokemonsData } from "../services/fetchPokemons";
+import { deletePokemon } from "../services/deletePokemon";
+import { StatusCodes } from "http-status-codes";
+import AlertBox from "../components/alertBox";
 
 function HomePage() {
 
@@ -50,9 +53,39 @@ function HomePage() {
     
   }
 
-  function deleteD(){
-    console.log("Delete");
+  function displayAlert(message:string){
+    const newDiv = document.createElement('div');
+        document.body.appendChild(newDiv);
+        ReactDOM.render(<AlertBox message={message}/>, newDiv);
+    setTimeout(() => {
+      document.body.removeChild(newDiv)
+    }, 2000);
+  }
+
+  async function deleteUserPokemon(pokeId: string){
     
+    const pokemonToDelete = pokemons?.find((pokemon) => pokemon.id === pokeId)
+    
+    const response = await deletePokemon(pokeId)
+
+    switch (response.status) {
+      case StatusCodes.NO_CONTENT:
+        displayAlert("L'annonce à bien été supprimée")
+        setPokemons(pokemons?.filter((pokemon) => pokemon !== pokemonToDelete))
+        break;
+      case StatusCodes.NOT_FOUND:
+        displayAlert("Nous ne trouvons pas cette annonce")
+        break;
+      case StatusCodes.UNAUTHORIZED:
+        displayAlert("Vous ne pouvez pas faire cette action")
+        break;
+      case StatusCodes.FORBIDDEN:
+        displayAlert("Vous ne pouvez pas faire cette action")
+        break;
+      default:
+        break;
+    }
+
   }
 
   function edit(){
@@ -80,7 +113,7 @@ function HomePage() {
 
               pokemons && user ?
                 pokemons.map((pokemon) => {
-                  return <PokemonCard key={pokemon.id} pokemon={pokemon} buyCallback={buying} editCallback={edit} deleteCallback={deleteD} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isDeletable={isUserPokemon(pokemon,user)}></PokemonCard>
+                  return <PokemonCard key={pokemon.id} pokemon={pokemon} buyCallback={buying} editCallback={edit} deleteCallback={() => deleteUserPokemon(pokemon.id)} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isDeletable={isUserPokemon(pokemon,user)}></PokemonCard>
                 }) : null
             }
           </div>
