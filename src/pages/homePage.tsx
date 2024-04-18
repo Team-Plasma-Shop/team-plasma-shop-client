@@ -1,70 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NeoButton from "../components/button";
 import PokemonCard from "../components/pokemonCard";
 import { Pokemon } from "../models/pokemon";
 import { createPortal } from "react-dom";
 import AddPokemonModal from "../components/homepage/addPokemonModal";
+import fetchPokemons from "../services/fetchPokemons";
 
 function HomePage() {
 
-  const pokemons: Pokemon[] = [
-    {
-      id: '1',
-      name: 'Bulbasaur',
-      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-      price: 100,
-      type: 'Grass',
-      owner: 'Ash Ketchum',
-      isSold: false,
-      modifiedAt: new Date(),
-    },
-    {
-      id: '2',
-      name: 'Charmander',
-      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
-      price: 150,
-      type: 'Fire',
-      owner: 'Gary Oak',
-      isSold: false,
-      modifiedAt: new Date(),
-    },
-    {
-      id: '3',
-      name: 'Squirtle',
-      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
-      price: 120,
-      type: 'Water',
-      owner: 'Misty',
-      isSold: true,
-      modifiedAt: new Date(),
-    },
-  ];
+  const [pokemons, setPokemons] = useState<Pokemon[]>()
+  const [error, setError] = useState("")
+
+  async function getPokemons() {
+    const response = await fetchPokemons()
+    let pokemonsArray: Pokemon[] = [];
+
+    if (!response.ok) {
+      setError("Une erreur s'est produite veuillez ressayer plus tard")
+      return;
+    } else {
+      const pokemonData: any = await response.json()
+      pokemonsArray = pokemonData['hydra:member']
+    }
+
+    setPokemons(pokemonsArray)
+  }
+  useEffect(() => {
+    getPokemons()
+  }, [])
 
   const [isAdding, setIsAdding] = useState(false)
 
   return (
-    
-      <section className="mt-20">
-            <h1 className="text-4xl font-semibold">En stock</h1>
-            <p className="text-base w-2/4 mt-5 opacity-60">Volés avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma !</p>
 
-            <NeoButton text="Ajouter un Pokémon" handleClick={()=>{setIsAdding(!isAdding)}} colorText="primary" moreStyle="px-6"></NeoButton>
+    <section className="mt-20">
+      <h1 className="text-4xl font-semibold">En stock</h1>
+      <p className="text-base w-2/4 mt-5 opacity-60">Volés avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma !</p>
+
+      <NeoButton text="Ajouter un Pokémon" handleClick={() => { setIsAdding(!isAdding) }} colorText="primary" moreStyle="px-6"></NeoButton>
+      {
+        isAdding ?
+          createPortal(<AddPokemonModal handleClose={() => { setIsAdding(!isAdding) }} />, document.body) : null
+
+      }
+
+      {
+        error ? (<p>{error}</p>) : (
+          <div className="grid grid-cols-4 mt-8 gap-9">
             {
-              isAdding ? 
-                createPortal(<AddPokemonModal handleClose={()=>{setIsAdding(!isAdding)}}/>, document.body) : null
-            
+
+              pokemons ?
+                pokemons.map((pokemon) => {
+                  return <PokemonCard key={pokemon.id} pokemon={pokemon}></PokemonCard>
+                }) : null
             }
-            <div className="grid grid-cols-4 mt-8">
-            {
-              pokemons.map((pokemon) => {
-                return <PokemonCard key={pokemon.id} pokemon={pokemon}></PokemonCard>
-              } )
-            }
-            </div>
-            
-      
-      </section>
-    
+          </div>
+        )
+      }
+    </section>
+
   );
 }
 
