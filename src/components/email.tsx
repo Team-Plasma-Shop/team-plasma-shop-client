@@ -14,10 +14,8 @@ function sendEmail(username: string, email: string) {
 
   emailjs.send('service_ndza62c', 'template_wkm63km', e)
     .then((result) => {
-      console.log(result.text);
       localStorage.setItem("email-token", token);
     }, (error) => {
-      console.log(error.text);
     });
 };
 

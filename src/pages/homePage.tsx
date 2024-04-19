@@ -138,12 +138,12 @@ function HomePage() {
 
     <section className="mt-20">
       <h1 className="text-4xl font-semibold">En stock</h1>
-      <p className="text-base w-2/4 mt-5 opacity-60">Volés avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma !</p>
+      <p className="text-base w-2/4 mt-5 opacity-60">Traités avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma Shop !</p>
 
       <NeoButton text="Ajouter un Pokémon" handleClick={addPokemon} colorText="primary" moreStyle="px-6"></NeoButton>
       {
         isAdding ?
-          createPortal(<AddPokemonModal handleClose={() => { setIsAdding(!isAdding) }} pokemonToEdit={pokemonToEdit} />, document.body) : null
+          createPortal(<AddPokemonModal handleClose={() => { setIsAdding(!isAdding)}} refreshList={() => {getPokemons()}} pokemonToEdit={pokemonToEdit} />, document.body) : null
 
       }
 

@@ -7,9 +7,7 @@ function UserList() {
   const [users, setUsers] = useState<User[]>()
 
   useEffect(() => {
-    console.log(userTable);
     setUsers(userTable);
-      // getUsers();
   }, [])
   
   async function getUsers() {
@@ -21,7 +19,6 @@ function UserList() {
       },
     });
     const data = await response.json();
-    console.log(data);
     setUsers(data);
   }
 
