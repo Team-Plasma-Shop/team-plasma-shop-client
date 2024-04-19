@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PlasmaLogo } from "../assets/PlasmaLogo";
 import { veriefiedUser } from "../services/verifiedUser";
 import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
@@ -7,12 +7,20 @@ import { useNavigate } from "react-router-dom";
 function VerificationPage() {
   const token = localStorage.getItem("email-token");
   const tokenFromUrl = window.location.href.split("/email-verification/")[1];
+  const [emailDynamic, setEmailDynamic] = useState("")
   const navigate = useNavigate()
 
   useEffect(() => {
     checkToken();
+    getUserMail();
   }, []);
 
+  async function getUserMail(){
+    const currentUser = await getCurrentUserInfo()
+    if (currentUser) {
+      setEmailDynamic(currentUser.email)
+    }
+  }
   async function checkToken() {
     if (localStorage.getItem("email-token") && tokenFromUrl) {
       console.log(tokenFromUrl, token);
@@ -44,7 +52,7 @@ function VerificationPage() {
         <span className="item-center text-lg">Nous vous avons envoyé un mail à l'adresse suivante :</span>
         
         {/* TODO: email dynamix !!!!! */}
-        <span className="secondary-glow-text text-lg">example@mail.com</span>
+        <span className="secondary-glow-text text-lg">{emailDynamic}</span>
 
       </div>
 

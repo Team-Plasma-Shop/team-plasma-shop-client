@@ -12,7 +12,12 @@ export async function getCurrentUserInfo(): Promise<User | null> {
         decodedToken = jwtDecode(token)
 
         if (decodedToken) {
-            const currentUser: User = await fetchUserById(decodedToken.id)
+            const allUsersResponse = await fetch(`${process.env.REACT_APP_API_ROUTE}users`)
+
+            const allUsers = await allUsersResponse.json()
+
+            const currentUser = allUsers["hydra:member"].find((users: User) => users.email === decodedToken.email)
+
 
             return currentUser
         }
