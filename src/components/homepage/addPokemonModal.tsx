@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Pokemon } from "../../models/pokemon";
 import NeoButton from "../button";
 import { getCurrentUserInfo } from "../../utils/getCurrentUserInfo";
+import { getTokenFromLs } from "../../utils/getTokenFromLs";
 
 const pokemons = [
   {
@@ -96,8 +97,9 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
 
   async function addNewPokemon() {
     const currentUser = await getCurrentUserInfo();
+    const userToken = getTokenFromLs()
 
-    if (currentUser) {
+    if (currentUser && userToken) {
       const data = {
         ...selectedPokemon,
         price: price,
@@ -111,6 +113,7 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${userToken}`
           },
           body: JSON.stringify(data),
         }
@@ -128,17 +131,15 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
 
   async function editPokemon() {
     const currentUser = await getCurrentUserInfo();
+    const userToken = getTokenFromLs()
 
-    if (currentUser && pokemonToEdit) {
+    if (currentUser && pokemonToEdit && userToken) {
       const data = {
         ...selectedPokemon,
         owner: currentUser["@id"],
         price: price,
         updatedAt: new Date(),
-      };
-
-      console.log(data);
-      
+      };     
 
       const response = await fetch(
         `${process.env.REACT_APP_API_ROUTE}pokemons/${pokemonToEdit.id}`,
@@ -147,6 +148,7 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
           mode: "cors",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${userToken}`
           },
           body: JSON.stringify(data),
         }

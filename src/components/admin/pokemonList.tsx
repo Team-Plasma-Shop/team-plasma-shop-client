@@ -8,7 +8,6 @@ function PokemonList() {
   const [pokemons, setPokemons] = useState<Pokemon[]>()
 
   useEffect(() => {
-    console.log(pokemonsTable);
     
     setPokemons(pokemonsTable);
     
@@ -24,7 +23,6 @@ function PokemonList() {
       },
     });
     const data = await response.json();
-    console.log(data);
     setPokemons(data);
   }
 
@@ -36,7 +34,6 @@ function PokemonList() {
         },
     });
     const data = await response.json();
-    console.log(data);
   }
 
     return (

@@ -9,6 +9,7 @@ import { fetchUserPokemons } from "../services/fetchUserPokemon";
 import NeoButton from "../components/button";
 import { useNavigate } from "react-router-dom";
 import { checkAdminRole } from "../utils/checkAdminRole";
+import { getTokenFromLs } from "../utils/getTokenFromLs";
 
 function AccountPage() {
   const [user, setUser] = useState<User>()
@@ -55,7 +56,7 @@ function AccountPage() {
 
   async function setUserInfo() {
     const currentUserInfo = await getCurrentUserInfo()
-  
+    
     if (currentUserInfo) {
       setUser(currentUserInfo)
     }
@@ -64,9 +65,10 @@ function AccountPage() {
   async function setPokemonsArray() {
    
     const currentUserInfo = await getCurrentUserInfo()
+    const token = getTokenFromLs()
     
-    if (currentUserInfo) {
-      const response = await fetchUserPokemons(currentUserInfo.id)
+    if (currentUserInfo && token) {
+      const response = await fetchUserPokemons(currentUserInfo.id,token)
       
       if (response.ok) {
         const pokemonsInfo = await response.json()
