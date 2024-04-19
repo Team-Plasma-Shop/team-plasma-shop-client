@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import NeoButton from "./button";
 import { StatusCodes } from "http-status-codes";
 import { useNavigate } from "react-router-dom";
+import { getUserToken } from "../services/getUserToken";
 
 interface InputData {
   email: string;
@@ -19,14 +20,7 @@ function LoginForm() {
 
   const onSubmit: SubmitHandler<InputData> = async (data) => {
 
-    const response = await fetch(`${process.env.REACT_APP_API_ROUTE}auth`, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await getUserToken(data.email,data.password)
 
     if (!response.ok) {
       if (response.status === StatusCodes.UNAUTHORIZED) {

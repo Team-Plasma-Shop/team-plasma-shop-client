@@ -81,6 +81,7 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
   useEffect(()=> {
     if (pokemonToEdit && pokemonToEdit !== null) {
       setSelectedPokemon(pokemonToEdit)
+      setPrice(pokemonToEdit.price)
     }
   },[pokemonToEdit])
 
@@ -131,6 +132,7 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
     if (currentUser && pokemonToEdit) {
       const data = {
         ...selectedPokemon,
+        owner: currentUser["@id"],
         price: price,
         updatedAt: new Date(),
       };

@@ -1,24 +1,37 @@
 import { useEffect } from "react";
 import { PlasmaLogo } from "../assets/PlasmaLogo";
+import { veriefiedUser } from "../services/verifiedUser";
+import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
+import { useNavigate } from "react-router-dom";
 
 function VerificationPage() {
   const token = localStorage.getItem("email-token");
   const tokenFromUrl = window.location.href.split("/email-verification/")[1];
+  const navigate = useNavigate()
 
   useEffect(() => {
     checkToken();
   }, []);
 
-  function checkToken() {
+  async function checkToken() {
     if (localStorage.getItem("email-token") && tokenFromUrl) {
       console.log(tokenFromUrl, token);
 
       if (tokenFromUrl === token) {
-        localStorage.removeItem("email-token");
-        console.log("UTILISATEUR VERIFIE");
+        localStorage.removeItem("email-token");      
+        const user = await getCurrentUserInfo();
         
-  
-        // TODO: verify user and redirect
+        if (user && user.id) {
+          const response = await veriefiedUser(user.id)
+          
+          if (response.ok) {
+            navigate("/")
+          } else {
+            console.log("Error");
+            
+          }
+          
+        }
       }
     }
   }
