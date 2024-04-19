@@ -88,9 +88,17 @@ function HomePage() {
 
   }
 
-  function edit(){
-    console.log("edit");
+  const [pokemonToEdit,setPokemonToEdit] = useState<Pokemon | null>()
+  function edit(pokemon:Pokemon){
     
+    setPokemonToEdit(pokemon)
+    setIsAdding(!isAdding)
+
+  }
+
+  function addPokemon(){
+    setIsAdding(!isAdding)
+    setPokemonToEdit(null)
   }
 
   return (
@@ -99,10 +107,10 @@ function HomePage() {
       <h1 className="text-4xl font-semibold">En stock</h1>
       <p className="text-base w-2/4 mt-5 opacity-60">Volés avec respect, vendus pour l'argent : découvrez et adoptez votre Pokémon idéal avec Team Plasma !</p>
 
-      <NeoButton text="Ajouter un Pokémon" handleClick={() => { setIsAdding(!isAdding) }} colorText="primary" moreStyle="px-6"></NeoButton>
+      <NeoButton text="Ajouter un Pokémon" handleClick={addPokemon} colorText="primary" moreStyle="px-6"></NeoButton>
       {
         isAdding ?
-          createPortal(<AddPokemonModal handleClose={() => { setIsAdding(!isAdding) }} />, document.body) : null
+          createPortal(<AddPokemonModal handleClose={() => { setIsAdding(!isAdding) }} pokemonToEdit={pokemonToEdit} />, document.body) : null
 
       }
 
@@ -113,7 +121,7 @@ function HomePage() {
 
               pokemons && user ?
                 pokemons.map((pokemon) => {
-                  return <PokemonCard key={pokemon.id} pokemon={pokemon} buyCallback={buying} editCallback={edit} deleteCallback={() => deleteUserPokemon(pokemon.id)} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isDeletable={isUserPokemon(pokemon,user)}></PokemonCard>
+                  return <PokemonCard key={pokemon.id} pokemon={pokemon} buyCallback={buying} editCallback={()=> edit(pokemon)} deleteCallback={() => deleteUserPokemon(pokemon.id)} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isDeletable={isUserPokemon(pokemon,user)}></PokemonCard>
                 }) : null
             }
           </div>

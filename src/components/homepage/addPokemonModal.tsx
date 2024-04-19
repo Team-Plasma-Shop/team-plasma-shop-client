@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Pokemon } from "../../models/pokemon";
 import NeoButton from "../button";
 import { getCurrentUserInfo } from "../../utils/getCurrentUserInfo";
@@ -66,10 +66,10 @@ const pokemons = [
   },
 ];
 
-function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
+function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => any, pokemonToEdit?: Pokemon | null }) {
   interface Pokemon {
     name: string;
-    imageLink: string; //Je veux les artwork official
+    imageLink: string;
     type: string;
   }
 
@@ -77,6 +77,12 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
   const [price, setPrice] = useState<number>();
   const [sucess, setSucess] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(()=> {
+    if (pokemonToEdit && pokemonToEdit !== null) {
+      setSelectedPokemon(pokemonToEdit)
+    }
+  },[pokemonToEdit])
 
   function changeSelectedPokemon(e: ChangeEvent<HTMLSelectElement>) {
     const pokemon = pokemons.find((pokemon) => pokemon.name === e.target.value);
@@ -119,6 +125,41 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
     }
   }
 
+  async function editPokemon() {
+    const currentUser = await getCurrentUserInfo();
+
+    if (currentUser && pokemonToEdit) {
+      const data = {
+        ...selectedPokemon,
+        price: price,
+        updatedAt: new Date(),
+      };
+
+      console.log(data);
+      
+
+      const response = await fetch(
+        `${process.env.REACT_APP_API_ROUTE}pokemons/${pokemonToEdit.id}`,
+        {
+          method: "PUT",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        setError("Une erreur s'est produite, veuillez ressayer plus tard");
+      } else {
+        setSucess(
+          "Modification réussie !"
+        );
+      }
+    }
+  }
+
   return (
     <>
       <div className="absolute z-10 p-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-96 h-fit shadow-outerNeo bg-background flex flex-col gap-4 ">
@@ -133,6 +174,7 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
           <select
             className="text-2xl font-semibold bg-transparent"
             onChange={(e) => changeSelectedPokemon(e)}
+            defaultValue={pokemonToEdit?.name}
           >
             {pokemons.map((pokemon) => {
               return (
@@ -153,21 +195,30 @@ function AddPokemonModal({ handleClose }: { handleClose: () => any }) {
             onChange={(e) => setPrice(Number(e.target.value))}
             type="number"
             placeholder="1000"
+            defaultValue={pokemonToEdit?.price}
             className="rounded-md p-3 placeholder-white w-full text-sm placeholder-opacity-30 bg-inherit text-white border-0 outline-0 focus:border-b border-secondary shadow-outerNeo"
           />
         </label>
-            {
-                sucess ? (<p className="text-secondary text-center">{sucess}</p>) :null
-            }
-            {
-                error ? (<p className="text-danger">{error}</p>) :null
-            }
-        <NeoButton
-          text="Ajouter"
-          colorText="primary"
-          handleClick={addNewPokemon}
-          moreStyle="w-full"
-        ></NeoButton>
+        {
+          sucess ? (<p className="text-secondary text-center">{sucess}</p>) : null
+        }
+        {
+          error ? (<p className="text-danger">{error}</p>) : null
+        }
+        {
+          pokemonToEdit ==null ? (<NeoButton
+            text="Ajouter"
+            colorText="primary"
+            handleClick={addNewPokemon}
+            moreStyle="w-full"
+          ></NeoButton>) : (<NeoButton
+            text="Modifier"
+            colorText="secondary"
+            handleClick={editPokemon}
+            moreStyle="w-full"
+          ></NeoButton>)
+        }
+
       </div>
       <div
         onClick={handleClose}
