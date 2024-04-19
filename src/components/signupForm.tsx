@@ -4,6 +4,8 @@ import NeoButton from "./button";
 import { StatusCodes } from "http-status-codes";
 import { useNavigate } from "react-router-dom";
 import { sendEmail } from "./email";
+import { User } from "../models/user";
+import { getUserToken } from "../services/getUserToken";
 
 interface InputData {
   username: string;
@@ -47,6 +49,10 @@ function SignupForm() {
     }
     
     if (response.ok) {
+      const response = await getUserToken(data.email, data.password)
+      const token = await response.json()
+      localStorage.setItem("token", JSON.stringify(token.token))
+    
       sendEmail(data.username, data.email);
       navigate("/email-verification")
     }
