@@ -1,6 +1,6 @@
 export interface Token {
     exp: string;
     iat: string;
-    id: string;
+    email: string;
     roles: string;
 }

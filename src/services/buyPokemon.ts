@@ -1,6 +1,6 @@
 import { Pokemon } from "../models/pokemon"
 
-export async function buyPokemon(pokemonToBuy: Pokemon, newOwner: string) {
+export async function buyPokemon(pokemonToBuy: Pokemon, newOwner: string, userToken: string) {
 
     const data = {
         ...pokemonToBuy,
@@ -11,7 +11,8 @@ export async function buyPokemon(pokemonToBuy: Pokemon, newOwner: string) {
         method: "PUT",
         mode: "cors",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${userToken}`
         },
         body: JSON.stringify(data)
     })
