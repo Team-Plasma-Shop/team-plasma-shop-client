@@ -10,6 +10,7 @@ import { fetchPokemonsData } from "../services/fetchPokemons";
 import { deletePokemon } from "../services/deletePokemon";
 import { StatusCodes } from "http-status-codes";
 import AlertBox from "../components/alertBox";
+import { buyPokemon } from "../services/buyPokemon";
 
 function HomePage() {
 
@@ -48,10 +49,29 @@ function HomePage() {
     return pokemon.owner === user["@id"]
   }
 
-  function buying(){
-    console.log("Buy");
-    
+  async function buying(pokemon: Pokemon){
+    if (user && user["@id"]) {
+     const response = await buyPokemon(pokemon, user["@id"])
+
+      switch (response.status) {
+        case StatusCodes.OK:
+          displayAlert("Vous avez bien acheté le Pokémon")
+          break;
+        case StatusCodes.NOT_FOUND:
+          displayAlert("Nous ne trouvons pas cette annonce")
+          break;
+        case StatusCodes.UNAUTHORIZED:
+          displayAlert("Vous ne pouvez pas faire cette action")
+          break;
+        case StatusCodes.FORBIDDEN:
+          displayAlert("Vous ne pouvez pas faire cette action")
+          break;
+        default:
+          break;
+      }
+    }
   }
+
 
   function displayAlert(message:string){
     const newDiv = document.createElement('div');
@@ -121,7 +141,7 @@ function HomePage() {
 
               pokemons && user ?
                 pokemons.map((pokemon) => {
-                  return <PokemonCard key={pokemon.id} pokemon={pokemon} buyCallback={buying} editCallback={()=> edit(pokemon)} deleteCallback={() => deleteUserPokemon(pokemon.id)} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isDeletable={isUserPokemon(pokemon,user)}></PokemonCard>
+                  return <PokemonCard key={pokemon.id} pokemon={pokemon} buyCallback={()=> buying(pokemon)} editCallback={()=> edit(pokemon)} deleteCallback={() => deleteUserPokemon(pokemon.id)} isBuyable={!isUserPokemon(pokemon,user)} isEditable={isUserPokemon(pokemon,user)} isDeletable={isUserPokemon(pokemon,user)}></PokemonCard>
                 }) : null
             }
           </div>
