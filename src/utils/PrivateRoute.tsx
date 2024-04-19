@@ -14,7 +14,6 @@ function PrivateRoutes(){
         const user = await getCurrentUserInfo()
 
         if (user) {
-            console.log(user);
             
         }
         return user?.isVerified

@@ -23,8 +23,7 @@ function VerificationPage() {
   }
   async function checkToken() {
     if (localStorage.getItem("email-token") && tokenFromUrl) {
-      console.log(tokenFromUrl, token);
-
+    
       if (tokenFromUrl === token) {
         localStorage.removeItem("email-token");      
         const user = await getCurrentUserInfo();

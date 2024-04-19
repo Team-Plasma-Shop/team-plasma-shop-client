@@ -67,7 +67,7 @@ const pokemons = [
   },
 ];
 
-function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => any, pokemonToEdit?: Pokemon | null }) {
+function AddPokemonModal({ handleClose, pokemonToEdit, refreshList }: { handleClose: () => any, pokemonToEdit?: Pokemon | null, refreshList: ()=> any }) {
   interface Pokemon {
     name: string;
     imageLink: string;
@@ -119,6 +119,8 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
         }
       );
 
+      refreshList()
+
       if (!response.ok) {
         setError("Une erreur s'est produite, veuillez ressayer plus tard");
       } else {
@@ -153,6 +155,8 @@ function AddPokemonModal({ handleClose, pokemonToEdit }: { handleClose: () => an
           body: JSON.stringify(data),
         }
       );
+
+      refreshList()
 
       if (!response.ok) {
         setError("Une erreur s'est produite, veuillez ressayer plus tard");

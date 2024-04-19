@@ -104,7 +104,7 @@ return (
         user ? (
           <>
           <GeneralInfos username={user.username} email={user.email} />
-          <NeoButton text="Déconnexion" handleClick={logout} colorText="danger"/>
+          <NeoButton text="Déconnexion" handleClick={logout} colorText="danger" moreStyle="w-fit px-4"/>
           <OwnedPokemon pokemons={pokemons} />
 
           {
