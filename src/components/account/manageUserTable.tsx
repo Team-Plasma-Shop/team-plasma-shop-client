@@ -22,7 +22,7 @@ function ManageUserTable({ users }: { users: User[] }) {
                             <tr className="border-b-2 border-white border-opacity-5" key={user.email}>
                                 <td className="p-6">{user.username}</td>
                                 <td className="p-6">{user.email}</td>
-                                <td className="p-6">{user.role}</td>
+                                <td className="p-6">{user.roles}</td>
                             </tr>
                         )
                     })

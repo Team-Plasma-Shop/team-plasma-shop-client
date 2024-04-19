@@ -4,5 +4,5 @@ export interface User {
   username: string;
   email: string;
   isVerified: boolean;
-  role: string[];
+  roles: string[];
 }
