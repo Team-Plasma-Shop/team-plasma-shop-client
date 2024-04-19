@@ -13,7 +13,7 @@ function UserCard({user, isDeletable = false, isEditable = false}: {user: User, 
             <div className="flex flex-col justify-between items-center gap-1">
                 <p className="text-xl font-semibold tracking-wide">{user.username}</p>
                 <p className="font-bold text-lg primary-glow-text">{user.email}</p>
-                <p className="font-bold text-lg">{user.role}</p>
+                <p className="font-bold text-lg">{user.roles}</p>
             </div>
 
             <div className="flex justify-between gap-4">
