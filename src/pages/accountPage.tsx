@@ -6,10 +6,13 @@ import ManageUserTable from "../components/account/manageUserTable";
 import { User } from '../models/user';
 import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
 import { fetchUserPokemons } from "../services/fetchUserPokemon";
+import NeoButton from "../components/button";
+import { useNavigate } from "react-router-dom";
 
 function AccountPage() {
   const [user, setUser] = useState<User>()
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const navigate = useNavigate()
 
   const users: User[] = [
     {
@@ -66,7 +69,6 @@ function AccountPage() {
       
       if (response.ok) {
         const pokemonsInfo = await response.json()
-        console.log(pokemonsInfo);
         
         setPokemons(pokemonsInfo["hydra:member"])
       }
@@ -74,10 +76,17 @@ function AccountPage() {
     }
   }
 
+
   async function initState() {
     await setUserInfo()
     await setPokemonsArray()
   }
+
+  function logout(){
+    localStorage.removeItem("token")
+    navigate("/login")
+  }
+
 
 
 useEffect(() => {
@@ -93,6 +102,7 @@ return (
         user ? (
           <>
           <GeneralInfos username={user.username} email={user.email} />
+          <NeoButton text="Déconnexion" handleClick={logout} colorText="danger"/>
           <OwnedPokemon pokemons={pokemons} />
           <ManageUserTable users={users} />
           </>
