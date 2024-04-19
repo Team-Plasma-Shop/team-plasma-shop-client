@@ -5,43 +5,11 @@ import OwnedPokemon from "../components/account/ownedPokemons";
 import ManageUserTable from "../components/account/manageUserTable";
 import { User } from '../models/user';
 import { getCurrentUserInfo } from "../utils/getCurrentUserInfo";
+import { fetchUserPokemons } from "../services/fetchUserPokemon";
 
 function AccountPage() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-
-  const pokemons: Pokemon[] = [
-    {
-      id: '1',
-      name: 'Bulbasaur',
-      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-      price: 100,
-      type: 'Grass',
-      owner: 'Ash Ketchum',
-      isSold: false,
-      modifiedAt: new Date(),
-    },
-    {
-      id: '2',
-      name: 'Charmander',
-      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
-      price: 150,
-      type: 'Fire',
-      owner: 'Gary Oak',
-      isSold: false,
-      modifiedAt: new Date(),
-    },
-    {
-      id: '3',
-      name: 'Squirtle',
-      imageLink: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
-      price: 120,
-      type: 'Water',
-      owner: 'Misty',
-      isSold: true,
-      modifiedAt: new Date(),
-    },
-  ];
+  const [user, setUser] = useState<User>()
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
   const users: User[] = [
     {
@@ -85,14 +53,35 @@ function AccountPage() {
     const currentUserInfo = await getCurrentUserInfo()
   
     if (currentUserInfo) {
-      setUsername(currentUserInfo.username)
-      setEmail(currentUserInfo.email)
+      setUser(currentUserInfo)
     }
+  }
+
+  async function setPokemonsArray() {
+   
+    const currentUserInfo = await getCurrentUserInfo()
+    
+    if (currentUserInfo) {
+      const response = await fetchUserPokemons(currentUserInfo.id)
+      
+      if (response.ok) {
+        const pokemonsInfo = await response.json()
+        console.log(pokemonsInfo);
+        
+        setPokemons(pokemonsInfo["hydra:member"])
+      }
+
+    }
+  }
+
+  async function initState() {
+    await setUserInfo()
+    await setPokemonsArray()
   }
 
 
 useEffect(() => {
-  setUserInfo()
+  initState()
 }, [])
 
 
@@ -100,9 +89,17 @@ return (
   <section className="mt-20">
     <h1 className="text-4xl font-semibold">Compte</h1>
     <div className="flex flex-col gap-8 mt-8">
-      <GeneralInfos username={username} email={email} />
-      <OwnedPokemon pokemons={pokemons} />
-      <ManageUserTable users={users} />
+      {
+        user ? (
+          <>
+          <GeneralInfos username={user.username} email={user.email} />
+          <OwnedPokemon pokemons={pokemons} />
+          <ManageUserTable users={users} />
+          </>
+          
+        ) : null
+      }
+      
     </div>
 
   </section>
